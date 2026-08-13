@@ -1,0 +1,147 @@
+/* =========================================================
+   ANIMATIONS — Crescent Literary Society
+   Scroll fade-ups, entrance animations, micro-interactions
+   ========================================================= */
+
+/* --- Page entrance --- */
+body {
+  animation: pageFadeIn 0.45s ease-out both;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---- Fade-up on scroll (IntersectionObserver) ---- */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: opacity, transform;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay helpers (applied by JS, or manually) */
+.delay-1 { transition-delay: 80ms; }
+.delay-2 { transition-delay: 160ms; }
+.delay-3 { transition-delay: 240ms; }
+.delay-4 { transition-delay: 320ms; }
+
+/* ---- Hero text entrance sequence ---- */
+.hero-eyebrow {
+  animation: heroRise 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.25s both;
+}
+
+.hero-title {
+  animation: heroRise 0.85s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+}
+
+.hero-sub {
+  animation: heroRise 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+}
+
+.hero-cta {
+  animation: heroRise 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Scroll line indicator ---- */
+.hero-scroll-line {
+  display: block;
+  width: 1px;
+  height: 56px;
+  background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, 0.65));
+  margin: 0 auto;
+  animation: scrollPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  45%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  50%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+/* ---- Gold shimmer on hover ---- */
+@keyframes shimmerGold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
+  50%       { box-shadow: 0 0 20px 2px rgba(201, 168, 76, 0.15); }
+}
+
+/* ---- Text link underline slide ---- */
+.text-link {
+  color: var(--accent-gold);
+  position: relative;
+  transition: color var(--transition);
+}
+
+.text-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent-gold);
+  transition: width var(--transition);
+}
+
+.text-link:hover::after {
+  width: 100%;
+}
+
+/* ---- Number / stat counters ---- */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Wing card hover glow ---- */
+.wings-card:hover {
+  box-shadow:
+    0 16px 60px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(201, 168, 76, 0.12),
+    inset 0 1px 0 rgba(201, 168, 76, 0.06);
+}
+
+/* ---- Tab button active state ---- */
+.tab-btn {
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+/* ---- Form focus ring pulse ---- */
+@keyframes focusPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
+  70%  { box-shadow: 0 0 0 6px rgba(201, 168, 76, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .fade-up {
+    opacity: 1;
+    transform: none;
+  }
+}

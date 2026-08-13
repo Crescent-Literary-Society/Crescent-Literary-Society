@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/blog/:slug", "destination": "/api/post-meta?source=blog&slug=:slug" },
+    { "source": "/meraki/:slug", "destination": "/api/post-meta?source=meraki&slug=:slug" },
+    { "source": "/crescent-line/:slug", "destination": "/api/post-meta?source=crescent-line&slug=:slug" },
+    { "source": "/obverse/:slug", "destination": "/api/post-meta?source=obverse&slug=:slug" }
+  ]
+}

@@ -1,0 +1,161 @@
+backend:
+  name: github
+  repo: Crescent-Literary-Society/Crescent-Literary-Society
+  branch: main
+  base_url: https://crescentliterarysociety.vercel.app
+  auth_endpoint: api/auth
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "site_data"
+    label: "Site Data"
+    files:
+      - label: "Homepage Carousel"
+        name: "carousel"
+        file: "data/carousel.json"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image", description: "Optimize image to max 1920px width, JPG/WebP format for faster page load times."}
+              - {label: "Alt Text", name: "altText", widget: "string", required: false}
+
+      - label: "Blog Index"
+        name: "blog"
+        file: "data/blog.json"
+        preview_path: "post.html?slug={{slug}}"
+        fields:
+          - label: "Posts"
+            name: "posts"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string", required: true}
+              - {label: "Slug", name: "slug", widget: "string", pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers, hyphens only'], hint: "URL-safe identifier. Once set, do not change.", required: true}
+              - {label: "Publish Date", name: "date", widget: "datetime", required: true}
+              - {label: "Author", name: "author", widget: "string", required: true}
+              - {label: "Thumbnail Image", name: "thumbnail", widget: "image", required: false, description: "Optimize thumbnail to max 800px width, JPG/WebP format."}
+              - {label: "Body", name: "body", widget: "markdown", required: true}
+
+      - label: "House of Debaters Carousel"
+        name: "debaters-carousel"
+        file: "data/debaters-carousel.json"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image", description: "Optimize slide to max 1920px width, JPG/WebP format."}
+              - {label: "Alt Text", name: "altText", widget: "string", required: false}
+
+      - label: "Improv Carousel"
+        name: "improv-carousel"
+        file: "data/improv-carousel.json"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image", description: "Optimize slide to max 1920px width, JPG/WebP format."}
+              - {label: "Alt Text", name: "altText", widget: "string", required: false}
+
+      - label: "Writer's Guild Carousel"
+        name: "writers-carousel"
+        file: "data/writers-carousel.json"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image", description: "Optimize slide to max 1920px width, JPG/WebP format."}
+              - {label: "Alt Text", name: "altText", widget: "string", required: false}
+
+      - label: "Quizzers Circuit Carousel"
+        name: "quizzers-carousel"
+        file: "data/quizzers-carousel.json"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image", description: "Optimize slide to max 1920px width, JPG/WebP format."}
+              - {label: "Alt Text", name: "altText", widget: "string", required: false}
+
+      - label: "Editorial Board Carousel"
+        name: "editorial-carousel"
+        file: "data/editorial-carousel.json"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image", description: "Optimize slide to max 1920px width, JPG/WebP format."}
+              - {label: "Alt Text", name: "altText", widget: "string", required: false}
+
+      - label: "Meraki Magazine"
+        name: "meraki"
+        file: "data/meraki.json"
+        preview_path: "post.html?slug={{slug}}"
+        fields:
+          - label: "Issues"
+            name: "posts"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string", required: true}
+              - {label: "Slug", name: "slug", widget: "string", pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers, hyphens only'], hint: "URL-safe identifier. Once set, do not change.", required: true}
+              - {label: "Publish Date", name: "date", widget: "datetime", required: true}
+              - {label: "Author/Editor", name: "author", widget: "string", required: true}
+              - {label: "Cover Image", name: "thumbnail", widget: "image", required: false, description: "Optimize cover to max 800px width, JPG/WebP format."}
+              - {label: "Summary", name: "body", widget: "markdown", required: true}
+
+      - label: "Crescent Line Newsletter"
+        name: "crescent-line"
+        file: "data/crescent-line.json"
+        preview_path: "post.html?slug={{slug}}"
+        fields:
+          - label: "Newsletters"
+            name: "posts"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string", required: true}
+              - {label: "Slug", name: "slug", widget: "string", pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers, hyphens only'], hint: "URL-safe identifier. Once set, do not change.", required: true}
+              - {label: "Publish Date", name: "date", widget: "datetime", required: true}
+              - {label: "Editor", name: "author", widget: "string", required: true}
+              - {label: "Cover Image", name: "thumbnail", widget: "image", required: false, description: "Optimize cover to max 800px width, JPG/WebP format."}
+              - {label: "Summary", name: "body", widget: "markdown", required: true}
+
+      - label: "Obverse Magazine"
+        name: "obverse"
+        file: "data/obverse.json"
+        preview_path: "post.html?slug={{slug}}"
+        fields:
+          - label: "Articles"
+            name: "posts"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string", required: true}
+              - {label: "Slug", name: "slug", widget: "string", pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers, hyphens only'], hint: "URL-safe identifier. Once set, do not change.", required: true}
+              - {label: "Publish Date", name: "date", widget: "datetime", required: true}
+              - {label: "Author", name: "author", widget: "string", required: true}
+              - {label: "Cover Image", name: "thumbnail", widget: "image", required: false, description: "Optimize cover to max 800px width, JPG/WebP format."}
+              - {label: "Body", name: "body", widget: "markdown", required: true}
+
+      - label: "Members"
+        name: "members"
+        file: "data/members.json"
+        fields:
+          - label: "Members List"
+            name: "members"
+            widget: "list"
+            fields:
+              - {label: "Name", name: "name", widget: "string", required: true}
+              - {label: "Role", name: "role", widget: "string", required: true}
+              - {label: "Profile Image", name: "image", widget: "image", required: false, description: "Optimize profile photo to max 400px width, JPG/WebP format."}
+
+      - label: "About Page Images"
+        name: "about-images"
+        file: "data/about-images.json"
+        fields:
+          - {label: "Hero Banner", name: "heroBanner", widget: "image", required: false, hint: "Full-width banner shown at the top of the About page. Optimize image to max 1920px width, JPG/WebP format."}
+          - {label: "Outing Photo", name: "outingPhoto", widget: "image", required: false, hint: "Full-width group photo shown below the mission banner. Optimize image to max 1920px width, JPG/WebP format."}
