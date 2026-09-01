@@ -297,6 +297,7 @@
         <a href="editorial-board.html" id="nav-editorial">Editorial Board</a>
         <ul class="nav-dropdown" role="list">
           <li><a href="meraki.html">Meraki</a></li>
+          <li><a href="obverse.html">Obverse</a></li>
           <li><a href="crescent-line.html">Crescent Line</a></li>
         </ul>
       </li>
@@ -599,8 +600,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       ? marked.parse(bodyMarkdown)
       : bodyMarkdown.replace(/\n/g, '<br>');
 
+    // Meraki issues may optionally also offer a PDF download alongside the reader view
+    const pdfButtonHTML = (source === 'meraki' && post.pdfUrl)
+      ? `<a class="btn btn-gold" href="${post.pdfUrl}" target="_blank" rel="noopener noreferrer" style="margin-bottom:1.5rem; display:inline-flex;">Download PDF <span aria-hidden="true">↓</span></a>`
+      : '';
+
     document.getElementById('post-article').innerHTML = `
       <hr class="post-divider">
+      ${pdfButtonHTML}
       <div class="post-body">${bodyHTML}</div>
     `;
 

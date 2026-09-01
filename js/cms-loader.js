@@ -202,12 +202,22 @@ const renderBlogGrid = (container, data) => {
  * Renders the members list in the grid layout.
  * @param {HTMLElement} container - The members grid element
  * @param {object} data - The members listing data
+ * @param {string} [teamFilter] - When set, only members whose `team` matches are shown
  * @returns {void}
  */
-const renderMembersGrid = (container, data) => {
+const renderMembersGrid = (container, data, teamFilter) => {
   if (!container) return;
   container.innerHTML = '';
-  data.members.forEach((member, i) => {
+  const members = (teamFilter ? data.members.filter(m => m.team === teamFilter) : data.members)
+    .slice()
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+  if (members.length === 0) {
+    showEmpty(container);
+    return;
+  }
+
+  members.forEach((member, i) => {
     const delayClass = i % 3 === 1 ? 'delay-1' : (i % 3 === 2 ? 'delay-2' : '');
     let imgSrc = member.image || '';
     if (imgSrc.startsWith('/')) {
@@ -507,6 +517,274 @@ const renderObverse = (container, data) => {
 };
 
 /**
+ * Renders the Obverse archive grid (same card pattern as Blog/Meraki/Crescent Line).
+ * @param {HTMLElement} container - The Obverse grid element
+ * @param {object} data - The Obverse articles data
+ * @returns {void}
+ */
+const renderObverseGrid = (container, data) => {
+  if (!container) return;
+  container.innerHTML = '';
+  const sortedPosts = data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  sortedPosts.forEach((post) => {
+    const slug = post.slug || generateSlug(post.title);
+    const postUrl = `/obverse/${slug}`;
+    const dateObj = new Date(post.date);
+    const dateStr = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    let imgSrc = post.thumbnail || '';
+    if (imgSrc.startsWith('/')) {
+      imgSrc = imgSrc.substring(1);
+    }
+    const plainText = getMarkdownText(post.body || '');
+
+    const card = document.createElement('a');
+    card.className = 'card blog-card fade-up';
+    card.href = postUrl;
+    card.style.textDecoration = 'none';
+    card.style.color = 'inherit';
+
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'card-img-wrap';
+
+    const thumbImg = document.createElement('img');
+    thumbImg.src = imgSrc;
+    thumbImg.alt = post.title || 'Obverse cover';
+    thumbImg.className = 'card-img';
+    thumbImg.loading = 'lazy';
+    thumbImg.width = 360;
+    thumbImg.height = 200;
+    imgWrap.appendChild(thumbImg);
+    card.appendChild(imgWrap);
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'card-body';
+
+    const dateSpan = document.createElement('span');
+    dateSpan.className = 'eyebrow';
+    dateSpan.style.marginBottom = '0.5rem';
+    dateSpan.textContent = dateStr;
+    contentDiv.appendChild(dateSpan);
+
+    const titleH3 = document.createElement('h4');
+    titleH3.textContent = post.title;
+    contentDiv.appendChild(titleH3);
+
+    const previewP = document.createElement('p');
+    previewP.textContent = `${plainText.substring(0, 150)}...`;
+    contentDiv.appendChild(previewP);
+
+    const authorDiv = document.createElement('div');
+    authorDiv.style.marginTop = 'auto';
+    authorDiv.style.paddingTop = '1rem';
+    authorDiv.style.display = 'flex';
+    authorDiv.style.justifyContent = 'space-between';
+    authorDiv.style.alignItems = 'center';
+
+    const authorSpan = document.createElement('span');
+    authorSpan.textContent = `— ${post.author || 'CLS'}`;
+    authorSpan.style.fontSize = '0.85rem';
+    authorSpan.style.opacity = '0.8';
+    authorDiv.appendChild(authorSpan);
+
+    const readSpan = document.createElement('span');
+    readSpan.className = 'card-link';
+    readSpan.innerHTML = 'Read <span aria-hidden="true">→</span>';
+    authorDiv.appendChild(readSpan);
+
+    contentDiv.appendChild(authorDiv);
+    card.appendChild(contentDiv);
+    container.appendChild(card);
+  });
+};
+
+/**
+ * Renders the homepage "Recent Updates" feed — the newest items across every
+ * publication category (Blog, Meraki, Obverse, Crescent Line), most recent first.
+ * @param {HTMLElement} container - The recent-updates grid element
+ * @param {{label: string, urlPrefix: string, data: object}[]} sources - One entry per category
+ * @returns {void}
+ */
+const renderRecentUpdates = (container, sources) => {
+  if (!container) return;
+
+  const merged = sources.flatMap(({ label, urlPrefix, data }) =>
+    (data.posts || []).map((post) => ({ ...post, _category: label, _urlPrefix: urlPrefix }))
+  );
+
+  if (merged.length === 0) {
+    showEmpty(container);
+    return;
+  }
+
+  const recent = merged
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 8);
+
+  container.innerHTML = '';
+  recent.forEach((post) => {
+    const slug = post.slug || generateSlug(post.title);
+    const postUrl = `/${post._urlPrefix}/${slug}`;
+    const dateStr = new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    let imgSrc = post.thumbnail || '';
+    if (imgSrc.startsWith('/')) imgSrc = imgSrc.substring(1);
+
+    const card = document.createElement('a');
+    card.className = 'card blog-card fade-up';
+    card.href = postUrl;
+    card.style.textDecoration = 'none';
+    card.style.color = 'inherit';
+
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'card-img-wrap';
+    const thumbImg = document.createElement('img');
+    thumbImg.src = imgSrc;
+    thumbImg.alt = post.title || 'Update thumbnail';
+    thumbImg.className = 'card-img';
+    thumbImg.loading = 'lazy';
+    thumbImg.width = 360;
+    thumbImg.height = 200;
+    imgWrap.appendChild(thumbImg);
+    card.appendChild(imgWrap);
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'card-body';
+
+    const metaRow = document.createElement('div');
+    metaRow.style.display = 'flex';
+    metaRow.style.gap = '0.6rem';
+    metaRow.style.alignItems = 'center';
+    metaRow.style.marginBottom = '0.5rem';
+
+    const badge = document.createElement('span');
+    badge.className = 'update-badge';
+    badge.textContent = post._category;
+    metaRow.appendChild(badge);
+
+    const dateSpan = document.createElement('span');
+    dateSpan.className = 'eyebrow';
+    dateSpan.style.marginBottom = '0';
+    dateSpan.textContent = dateStr;
+    metaRow.appendChild(dateSpan);
+
+    contentDiv.appendChild(metaRow);
+
+    const titleH4 = document.createElement('h4');
+    titleH4.textContent = post.title;
+    contentDiv.appendChild(titleH4);
+
+    contentDiv.appendChild(document.createElement('div')).outerHTML =
+      '<span class="card-link" style="margin-top:auto; padding-top:1rem;">View <span aria-hidden="true">→</span></span>';
+
+    card.appendChild(contentDiv);
+    container.appendChild(card);
+  });
+};
+
+/**
+ * Renders a wing's own content grid (stories/poems, event write-ups, results, highlights),
+ * filtered from the shared Wing Entries collection.
+ * @param {HTMLElement} container - The wing-entries grid element
+ * @param {string} wing - The wing slug (e.g. "writers-guild")
+ * @param {object} data - The Wing Entries data
+ * @returns {void}
+ */
+const renderWingEntries = (container, wing, data) => {
+  if (!container) return;
+  const entries = (data.entries || [])
+    .filter((e) => e.wing === wing)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  if (entries.length === 0) {
+    showEmpty(container);
+    return;
+  }
+
+  container.innerHTML = '';
+  entries.forEach((entry) => {
+    let imgSrc = entry.thumbnail || '';
+    if (imgSrc.startsWith('/')) imgSrc = imgSrc.substring(1);
+    const dateStr = entry.date
+      ? new Date(entry.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+      : '';
+
+    const card = document.createElement('div');
+    card.className = 'card blog-card fade-up';
+
+    if (imgSrc) {
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'card-img-wrap';
+      const thumbImg = document.createElement('img');
+      thumbImg.src = imgSrc;
+      thumbImg.alt = entry.title || 'Entry thumbnail';
+      thumbImg.className = 'card-img';
+      thumbImg.loading = 'lazy';
+      thumbImg.width = 360;
+      thumbImg.height = 200;
+      imgWrap.appendChild(thumbImg);
+      card.appendChild(imgWrap);
+    }
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'card-body';
+
+    if (dateStr) {
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'eyebrow';
+      dateSpan.style.marginBottom = '0.5rem';
+      dateSpan.textContent = dateStr;
+      contentDiv.appendChild(dateSpan);
+    }
+
+    const titleH4 = document.createElement('h4');
+    titleH4.textContent = entry.title;
+    contentDiv.appendChild(titleH4);
+
+    const bodyP = document.createElement('p');
+    bodyP.textContent = entry.entryType === 'story-poem'
+      ? `${getMarkdownText(entry.body || '').substring(0, 150)}...`
+      : (entry.body || '');
+    contentDiv.appendChild(bodyP);
+
+    if (entry.author) {
+      const authorSpan = document.createElement('span');
+      authorSpan.style.fontSize = '0.85rem';
+      authorSpan.style.opacity = '0.8';
+      authorSpan.textContent = `— ${entry.author}`;
+      contentDiv.appendChild(authorSpan);
+    }
+
+    card.appendChild(contentDiv);
+    container.appendChild(card);
+  });
+};
+
+/**
+ * Renders the Crescent Line QR panel — generates a QR code client-side from the
+ * CMS-managed destination URL so editors can update it without touching code.
+ * @param {HTMLCanvasElement} canvas - The QR canvas element
+ * @param {HTMLElement} captionEl - The caption paragraph element
+ * @param {HTMLAnchorElement} linkEl - The plain-text fallback link element
+ * @param {object} data - The Crescent Line settings data
+ * @returns {void}
+ */
+const renderQrPanel = (canvas, captionEl, linkEl, data) => {
+  const url = data.qrDestinationUrl;
+  if (!url) return;
+
+  if (canvas && typeof QRCode !== 'undefined') {
+    QRCode.toCanvas(canvas, url, { width: 192, margin: 1 }, (err) => {
+      if (err) canvas.replaceWith(document.createTextNode('QR code unavailable.'));
+    });
+  }
+  if (captionEl) captionEl.textContent = data.qrCaption || 'Scan to read the latest Crescent Line issue on the college site.';
+  if (linkEl) {
+    linkEl.href = url;
+    linkEl.textContent = url;
+  }
+};
+
+/**
  * Updates About page background banners and group photography.
  * @param {HTMLElement} heroBg - The page-hero container element
  * @param {HTMLImageElement} outingImg - The group outing image element
@@ -531,17 +809,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   const carouselContainer = document.getElementById('hero-carousel');
   const blogContainer = document.getElementById('blog-grid');
   const membersContainer = document.getElementById('members-grid');
+  const coordinatorsContainer = document.getElementById('coordinators-grid');
   const merakiContainer = document.getElementById('meraki-grid');
   const latestMagazinePreview = document.getElementById('latest-magazine-preview');
   const clContainer = document.getElementById('crescent-line-grid');
+  const obverseGridContainer = document.getElementById('obverse-grid');
+  const recentUpdatesContainer = document.getElementById('recent-updates-grid');
+  const wingEntriesContainer = document.getElementById('wing-entries-grid');
+  const qrCanvas = document.getElementById('qr-canvas');
+  const qrCaptionEl = document.getElementById('qr-caption');
+  const qrLinkEl = document.getElementById('qr-fallback-link');
   const aboutHeroBg = document.querySelector('#about-hero .page-hero-bg');
   const aboutOutingImg = document.querySelector('section img[alt*="Outing"]');
 
   // Insert skeletons before starting requests
   showSkeletons(blogContainer);
   showSkeletons(membersContainer);
+  showSkeletons(coordinatorsContainer);
   showSkeletons(merakiContainer);
   showSkeletons(clContainer);
+  showSkeletons(obverseGridContainer);
+  showSkeletons(recentUpdatesContainer);
+  showSkeletons(wingEntriesContainer);
 
   const fetchTasks = [];
 
@@ -585,19 +874,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Members Task
+  // Members Task — teamFilter comes from a `data-team-filter` attribute so the
+  // same grid can show everyone (About) or one team (Editorial Board / a wing).
   if (membersContainer) {
     fetchTasks.push({
       url: `data/members.json?t=${Date.now()}`,
       container: membersContainer,
       validate: (data) => data && Array.isArray(data.members),
-      render: (data) => {
-        if (data.members.length === 0) {
-          showEmpty(membersContainer);
-        } else {
-          renderMembersGrid(membersContainer, data);
-        }
-      }
+      render: (data) => renderMembersGrid(membersContainer, data, membersContainer.dataset.teamFilter)
+    });
+  }
+
+  // Wing Coordinators Task — a second, independently-filtered members grid
+  // that can appear alongside the wing-entries grid on a wing page.
+  if (coordinatorsContainer) {
+    fetchTasks.push({
+      url: `data/members.json?t=${Date.now()}`,
+      container: coordinatorsContainer,
+      validate: (data) => data && Array.isArray(data.members),
+      render: (data) => renderMembersGrid(coordinatorsContainer, data, coordinatorsContainer.dataset.teamFilter)
     });
   }
 
@@ -648,6 +943,43 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // Obverse Archive Grid Task
+  if (obverseGridContainer) {
+    fetchTasks.push({
+      url: `data/obverse.json?t=${Date.now()}`,
+      container: obverseGridContainer,
+      validate: (data) => data && Array.isArray(data.posts),
+      render: (data) => {
+        if (data.posts.length === 0) {
+          showEmpty(obverseGridContainer);
+        } else {
+          renderObverseGrid(obverseGridContainer, data);
+        }
+      }
+    });
+  }
+
+  // Wing Entries Task — filtered by the container's `data-wing` attribute
+  if (wingEntriesContainer) {
+    const wing = wingEntriesContainer.dataset.wing;
+    fetchTasks.push({
+      url: `data/wing-entries.json?t=${Date.now()}`,
+      container: wingEntriesContainer,
+      validate: (data) => data && Array.isArray(data.entries),
+      render: (data) => renderWingEntries(wingEntriesContainer, wing, data)
+    });
+  }
+
+  // Crescent Line QR Panel Task
+  if (qrCanvas) {
+    fetchTasks.push({
+      url: `data/crescent-line-settings.json?t=${Date.now()}`,
+      container: null,
+      validate: (data) => data && typeof data.qrDestinationUrl === 'string',
+      render: (data) => renderQrPanel(qrCanvas, qrCaptionEl, qrLinkEl, data)
+    });
+  }
+
   // About Images Task
   if (aboutHeroBg || aboutOutingImg) {
     fetchTasks.push({
@@ -683,6 +1015,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
+  // Recent Updates Task — merges Blog/Meraki/Obverse/Crescent Line, so it fetches
+  // its own copies of those four files rather than threading data through the
+  // single-URL fetchTasks shape above.
+  const recentUpdatesPromise = (async () => {
+    if (!recentUpdatesContainer) return;
+    const sourceFiles = [
+      { label: 'Blog', urlPrefix: 'blog', file: 'data/blog.json' },
+      { label: 'Meraki', urlPrefix: 'meraki', file: 'data/meraki.json' },
+      { label: 'Obverse', urlPrefix: 'obverse', file: 'data/obverse.json' },
+      { label: 'Crescent Line', urlPrefix: 'crescent-line', file: 'data/crescent-line.json' },
+    ];
+    const settled = await Promise.allSettled(sourceFiles.map(async (source) => {
+      const response = await fetch(`${source.file}?t=${Date.now()}`);
+      if (!response.ok) throw new Error(`Fetch failed with status ${response.status}`);
+      const data = await response.json();
+      if (!data || !Array.isArray(data.posts)) throw new Error('JSON response validation failed');
+      return { ...source, data };
+    }));
+    const results = settled.filter((r) => r.status === 'fulfilled').map((r) => r.value);
+    if (results.length === 0) {
+      showError(recentUpdatesContainer);
+    } else {
+      renderRecentUpdates(recentUpdatesContainer, results);
+    }
+  })();
+
   // Execute all fetches in parallel using Promise.allSettled()
   const promises = fetchTasks.map(async (task) => {
     try {
@@ -702,7 +1060,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  await Promise.allSettled(promises);
+  await Promise.allSettled([...promises, recentUpdatesPromise]);
 
   // Content is injected, trigger animations re-observation
   reObserveFadeElements();

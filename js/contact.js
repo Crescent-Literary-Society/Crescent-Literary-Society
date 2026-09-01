@@ -128,20 +128,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const formData = new FormData(form);
-    const bodyParams = new URLSearchParams();
-    for (const [key, value] of formData.entries()) {
-      bodyParams.append(key, value);
-    }
 
     try {
-      const response = await fetch('/', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: bodyParams.toString()
+        headers: { 'Accept': 'application/json' },
+        body: formData
       });
 
-      if (!response.ok) {
-        throw new Error('Server responded with an error');
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Server responded with an error');
       }
 
       // Smooth inline transition to success state
