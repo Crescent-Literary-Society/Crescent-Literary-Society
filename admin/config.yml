@@ -108,6 +108,7 @@ collections:
               - {label: "Author/Editor", name: "author", widget: "string", required: true}
               - {label: "Cover Image", name: "thumbnail", widget: "image", required: false, description: "Optimize cover to max 800px width, JPG/WebP format."}
               - {label: "Summary", name: "body", widget: "markdown", required: true}
+              - {label: "Downloadable PDF (optional)", name: "pdfUrl", widget: "file", required: false, hint: "If set, a Download PDF button appears above the reader view on this issue's page."}
 
       - label: "Crescent Line Newsletter"
         name: "crescent-line"
@@ -152,6 +153,65 @@ collections:
               - {label: "Name", name: "name", widget: "string", required: true}
               - {label: "Role", name: "role", widget: "string", required: true}
               - {label: "Profile Image", name: "image", widget: "image", required: false, description: "Optimize profile photo to max 400px width, JPG/WebP format."}
+              - label: "Team"
+                name: "team"
+                widget: "select"
+                required: true
+                hint: "Which page(s) this member appears on."
+                options:
+                  - {label: "Editorial Board (shows on About + Editorial Board)", value: "editorial-board"}
+                  - {label: "Writer's Guild", value: "writers-guild"}
+                  - {label: "House of Debaters", value: "house-of-debaters"}
+                  - {label: "Improv", value: "improv"}
+                  - {label: "Quizzers Circuit", value: "quizzers-circuit"}
+              - {label: "Order (lower shows first)", name: "order", widget: "number", required: false, default: 0}
+
+      - label: "Wing Entries"
+        name: "wing-entries"
+        file: "data/wing-entries.json"
+        fields:
+          - label: "Entries"
+            name: "entries"
+            widget: "list"
+            fields:
+              - label: "Wing"
+                name: "wing"
+                widget: "select"
+                required: true
+                options:
+                  - {label: "Writer's Guild", value: "writers-guild"}
+                  - {label: "House of Debaters", value: "house-of-debaters"}
+                  - {label: "Improv", value: "improv"}
+                  - {label: "Quizzers Circuit", value: "quizzers-circuit"}
+              - label: "Entry Type"
+                name: "entryType"
+                widget: "select"
+                required: true
+                options:
+                  - {label: "Story / Poem (Writer's Guild)", value: "story-poem"}
+                  - {label: "Event write-up", value: "event"}
+                  - {label: "Result", value: "result"}
+                  - {label: "Highlight", value: "highlight"}
+              - {label: "Title", name: "title", widget: "string", required: true}
+              - {label: "Date", name: "date", widget: "datetime", required: true}
+              - {label: "Author", name: "author", widget: "string", required: false, hint: "For Writer's Guild submissions."}
+              - {label: "Thumbnail Image", name: "thumbnail", widget: "image", required: false}
+              - {label: "Body / Description", name: "body", widget: "text", required: true}
+
+      - label: "Crescent Line Settings"
+        name: "crescent-line-settings"
+        file: "data/crescent-line-settings.json"
+        fields:
+          - label: "QR Destination URL"
+            name: "qrDestinationUrl"
+            widget: "string"
+            required: true
+            hint: "The OFFICIAL college Crescent Line newsletter link — not a CLS site page. Update this whenever a new issue is published and the QR code updates automatically."
+          - label: "QR Caption"
+            name: "qrCaption"
+            widget: "string"
+            required: false
+            default: "Scan to read the latest Crescent Line issue on the college site."
 
       - label: "About Page Images"
         name: "about-images"

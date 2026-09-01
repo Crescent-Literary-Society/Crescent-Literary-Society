@@ -1,21 +1,76 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Editorial Board | Crescent Literary Society</title>
-<meta content="Meet the Editorial Board members of the Crescent Literary Society, piloting our creative publications and magazine volumes." name="description"/>
+<title>Obverse Magazine | Crescent Literary Society</title>
+<meta content="Read Obverse, the flagship literary magazine of the Crescent Literary Society — courageous essays, poetry, fiction, and opinion." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
+<style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .blog-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition);
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+    }
+    .blog-thumb {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #222;
+    }
+    .blog-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .blog-date {
+      font-family: var(--font-nav);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 0.5rem;
+    }
+    .blog-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    .blog-author {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+    .blog-body-preview {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+  </style>
 
-
-
-
-
-
-<meta content="website" property="og:type"/><meta content="Editorial Board | Crescent Literary Society" property="og:title"/><meta content="Meet the Editorial Board members of the Crescent Literary Society, piloting our creative publications and magazine volumes." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/logo/logo.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/editorial-board.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/editorial-board.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/nav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script defer="True" src="js/theme.js"></script><script type="application/ld+json">
+<meta content="website" property="og:type"/><meta content="Obverse Magazine | Crescent Literary Society" property="og:title"/><meta content="Read Obverse, the flagship literary magazine of the Crescent Literary Society — courageous essays, poetry, fiction, and opinion." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/magazine/obverse-cover.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/obverse.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/obverse.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/nav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script defer="True" src="js/theme.js"></script><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -44,6 +99,7 @@
 </script>
 </head>
 <body>
+<!-- NAVIGATION -->
 <nav aria-label="Main navigation" class="site-nav" id="main-nav" role="navigation">
 <div class="nav-inner">
 <a aria-label="Crescent Literary Society — Home" class="nav-logo" href="index.html">
@@ -65,6 +121,7 @@
 <li><a href="about.html#history">History</a></li>
 <li><a href="about.html#members">Members</a></li>
 <li><a href="about.html#awards">Awards</a></li>
+<li><a href="connect.html">Contact</a></li>
 </ul>
 </li>
 <li class="has-dropdown">
@@ -77,7 +134,7 @@
 </ul>
 </li>
 <li class="has-dropdown">
-<a href="editorial-board.html" id="nav-editorial">Editorial Board</a>
+<a class="active" href="editorial-board.html" id="nav-editorial">Editorial Board</a>
 <ul class="nav-dropdown" role="list">
 <li><a href="meraki.html">Meraki</a></li>
 <li><a href="obverse.html">Obverse</a></li>
@@ -88,138 +145,35 @@
 <li class="nav-item-theme" style="display: flex; align-items: center;"><button class="btn-ghost" id="theme-toggle" style="padding: 0.4rem 0.8rem; margin-left: 1rem; cursor: pointer; border-radius: var(--radius); font-family: var(--font-display); background: transparent; display: flex; align-items: center; gap: 0.5rem;">Theme 🌓</button></li></ul>
 </div>
 </nav>
-<header class="page-hero" id="editorial-hero">
-<div class="hero-carousel" id="hero-carousel">`n      <div aria-label="Editorial mood background" class="main-hero-bg active" role="img" style="background-image: url('assets/hero/hero-bg.jpg');"></div>`n    </div>
+<!-- PAGE HERO -->
+<header class="page-hero" id="obverse-hero" style="min-height: 300px; height: 40vh;">
+<div aria-label="CLS Campus" class="page-hero-bg" role="img" style="background-image: url('assets/magazine/obverse-cover.jpg');"></div>
 <div class="page-hero-overlay"></div>
 <div class="container page-hero-content">
-<span class="eyebrow">CLS Wing</span>
-<h1>Editorial Board</h1>
-<p class="hero-sub"><em>"Words nurtured, refined, and set to leave a mark."</em></p>
+<span class="eyebrow">The Written Word</span>
+<h1>Obverse</h1>
+<p class="hero-sub"><em>"CLS's flagship literary magazine — voices that refuse to be polite about the world."</em></p>
 </div>
 </header>
+<!-- MAIN CONTENT -->
 <main>
 <section style="padding: 5rem 0;">
 <div class="container">
-<div class="club-content">
-<div class="club-body">
-<div class="fade-up">
-<span class="eyebrow">Reporting &amp; Editing</span>
-<h2>The Quiet Craft Behind Every Word</h2>
-<div class="divider"></div>
-</div>
-<div class="fade-up delay-1">
-<p style="font-size:1.1rem; color:rgba(255,255,255,0.88);">Writing takes shape through two quiet yet powerful forces: <strong>reporting</strong> and <strong>editing</strong>. Reporting is all about observing, exploring, and sharing stories that matter. Editing is the quiet craft that hones writing and brings impact to those stories — shaping writing into what the writer truly meant, through thoughtful choices and careful precision.</p>
-<p>Our board handles two major projects: <em>Crescent Line</em> and <em>Meraki</em>. Whether it's covering events, crafting interviews, or curating art and thought — our work is a blend of insight and intention.</p>
-<p>Here, words are not just written. They are nurtured, refined, set to taint and leave a mark.</p>
-</div>
-<blockquote class="pull-quote fade-up">
-              "Words are not just written here — they are nurtured, refined, and set to leave a mark."
-            </blockquote>
-<!-- Two publications -->
-<div class="fade-up" style="margin-top:3.5rem;">
-<h3 style="margin-bottom:2rem;">Our Publications</h3>
-<!-- Crescent Line -->
-<div style="background:var(--bg-card); border:1px solid var(--divider-gold); border-radius:var(--radius); padding:2.5rem; margin-bottom:1.5rem;">
-<div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem;">
-<div style="width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;">??</div>
-<div>
-<span class="eyebrow" style="margin-bottom:0;">Dean's Newsletter</span>
-<h4 style="font-size:1.3rem; line-height:1.2;">Crescent Line</h4>
-</div>
-</div>
-<p>The <strong>Crescent Line</strong> is CLS's official campus chronicle — the Dean's newsletter published and managed entirely by the Editorial Board. From event coverage and interviews to opinion and campus culture, Crescent Line documents the pulse of the institution with precision and care.</p>
-<p style="font-size:0.9rem; color:var(--text-secondary);">Our reporters observe, explore, and bring stories that matter to the Crescent community. Our editors shape those stories into something lasting.</p>
-</div>
-<!-- Meraki -->
-<div style="background:var(--bg-card); border:1px solid var(--divider-gold); border-radius:var(--radius); padding:2.5rem;">
-<div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem;">
-<div style="width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;">??</div>
-<div>
-<span class="eyebrow" style="margin-bottom:0;">Bi-Annual Magazine</span>
-<h4 style="font-size:1.3rem; line-height:1.2;">Meraki</h4>
-</div>
-</div>
-<p><em>Meraki</em> (Greek: <em>to do something with soul, creativity, or love</em>) is CLS's bi-annual creative and reflective magazine. Published twice a year, Meraki is a curated blend of student writing, artwork, and thought — capturing the emotional and intellectual life of the Crescent community.</p>
-<p style="font-size:0.9rem; color:var(--text-secondary);">Creative essays, poetry, interviews, art features, and cultural commentary — Meraki is where expression and intention meet.</p>
-</div>
-</div>
-<!-- What We Do -->
-<div class="fade-up" style="margin-top:3.5rem;">
-<h3 style="margin-bottom:1.5rem;">What Editorial Board Members Do</h3>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-<div style="background:var(--bg-card); border-left:2px solid var(--accent-gold); padding:1.5rem; border-radius:0 var(--radius) var(--radius) 0;">
-<h4 style="font-size:0.95rem; margin-bottom:0.4rem;">?? Reporting</h4>
-<p style="font-size:0.88rem;">Cover events, conduct interviews, write news and features for Crescent Line.</p>
-</div>
-<div style="background:var(--bg-card); border-left:2px solid var(--accent-gold); padding:1.5rem; border-radius:0 var(--radius) var(--radius) 0;">
-<h4 style="font-size:0.95rem; margin-bottom:0.4rem;">?? Editing</h4>
-<p style="font-size:0.88rem;">Refine, shape, and elevate writing — making every word precise and purposeful.</p>
-</div>
-<div style="background:var(--bg-card); border-left:2px solid var(--accent-gold); padding:1.5rem; border-radius:0 var(--radius) var(--radius) 0;">
-<h4 style="font-size:0.95rem; margin-bottom:0.4rem;">?? Curation</h4>
-<p style="font-size:0.88rem;">Curate art, writing, and thought for Meraki's bi-annual issues.</p>
-</div>
-<div style="background:var(--bg-card); border-left:2px solid var(--accent-gold); padding:1.5rem; border-radius:0 var(--radius) var(--radius) 0;">
-<h4 style="font-size:0.95rem; margin-bottom:0.4rem;">?? Ideating</h4>
-<p style="font-size:0.88rem;">Propose themes, story angles, and special editions for CLS publications.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Sidebar -->
-<aside aria-label="Editorial Board quick facts" class="club-highlights">
-<div class="highlight-box fade-up">
-<h4>Our Publications</h4>
-<ul class="highlight-list">
-<li><a href="crescent-line.html" style="color:var(--accent-gold); text-decoration:none; border-bottom:1px dotted var(--accent-gold);">Crescent Line</a> (Dean's Newsletter)</li>
-<li><a href="meraki.html" style="color:var(--accent-gold); text-decoration:none; border-bottom:1px dotted var(--accent-gold);">Meraki</a> (Bi-annual Magazine)</li>
-</ul>
-</div>
-<div class="highlight-box fade-up">
-<h4>What We Do</h4>
-<ul class="highlight-list">
-<li>Event coverage &amp; reporting</li>
-<li>Interviews &amp; features</li>
-<li>Editorial review &amp; editing</li>
-<li>Art &amp; thought curation</li>
-<li>Campus cultural journalism</li>
-</ul>
-</div>
-<div class="highlight-box fade-up">
-<h4>Open To</h4>
-<ul class="highlight-list">
-<li>Writers &amp; reporters</li>
-<li>Editors &amp; proofreaders</li>
-<li>Visual artists &amp; designers</li>
-</ul>
-</div>
-</aside>
+<div class="blog-grid" id="obverse-grid">
+<p style="text-align: center; color: var(--text-secondary); width: 100%;">Loading posts...</p>
 </div>
 </div>
 </section>
-<section class="bg-alternate" style="padding: 5rem 0;">
+<section class="fade-up delay-1 bg-alternate" style="padding: 5rem 0; text-align: center;">
 <div class="container">
-<div class="section-header centered fade-up">
-<span class="eyebrow">Meet the Team</span>
-<h2>Editorial Board Members</h2>
-<div class="divider"></div>
-</div>
-<div class="grid-4 stagger" id="members-grid" data-team-filter="editorial-board">
-<p style="text-align: center; color: var(--text-secondary); width: 100%;">Loading members...</p>
-</div>
-</div>
-</section>
-<section style="background:var(--bg-card); border-top:1px solid var(--divider-gold); border-bottom:1px solid var(--divider-gold); padding:4rem 0; text-align:center;">
-<div class="container">
-<div class="fade-up">
-<span class="eyebrow">The Work Continues</span>
-<h2 style="font-size:2rem; margin-bottom:1rem;">Every Story Deserves to Be Told Well</h2>
-<p style="max-width:540px; margin:0 auto 2rem;">If you believe in the power of careful words and patient craft, the Editorial Board is where your instincts find purpose.</p>
-<a class="btn btn-gold" href="connect.html" id="editorial-contact-btn">Get In Touch ?</a>
-</div>
+<div class="divider" style="margin: 0 auto 3rem auto;"></div>
+<h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Looking for more?</h3>
+<p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Dive into our bi-annual creative magazine.</p>
+<a class="btn btn-gold" href="meraki.html">Read Meraki →</a>
 </div>
 </section>
 </main>
+<!-- FOOTER -->
 <footer class="site-footer" role="contentinfo">
 <div class="container">
 <div class="footer-main">
@@ -227,7 +181,6 @@
 <!-- Brand -->
 <div class="footer-brand">
 <div class="footer-logo-wrap">
-<!-- REPLACE: CLS logo for footer -->
 <img alt="Crescent Literary Society" height="46" loading="eager" src="assets/logo/logo.jpg" width="46"/>
 <div>
 <div class="footer-logo-name">Crescent Literary Society</div>
@@ -294,8 +247,7 @@
 </div>
 </footer>
 
-
+<!-- CMS Loader handles fetching obverse.json -->
 
 <script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
 </html>
-

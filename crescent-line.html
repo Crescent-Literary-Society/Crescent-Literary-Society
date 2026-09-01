@@ -142,6 +142,7 @@
 <a class="active" href="editorial-board.html" id="nav-editorial">Editorial Board</a>
 <ul class="nav-dropdown" role="list">
 <li><a href="meraki.html">Meraki</a></li>
+<li><a href="obverse.html">Obverse</a></li>
 <li><a href="crescent-line.html">Crescent Line</a></li>
 </ul>
 </li>
@@ -161,7 +162,19 @@
 </header>
 <!-- MAIN CONTENT -->
 <main>
-<section style="padding: 5rem 0;">
+<!-- OFFICIAL NEWSLETTER QR PANEL -->
+<section style="padding: 4rem 0 0;">
+<div class="container">
+<div style="max-width: 420px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--divider-gold); border-radius: var(--radius); padding: 2.5rem; text-align: center;">
+<span class="eyebrow">Official College Newsletter</span>
+<h3 style="margin: 0.5rem 0 1.5rem;">Read on the College Site</h3>
+<canvas id="qr-canvas" style="margin: 0 auto; display: block;"></canvas>
+<p id="qr-caption" style="color: var(--text-secondary); margin-top: 1.25rem; font-size: 0.9rem;">Loading…</p>
+<a id="qr-fallback-link" href="#" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: underline; word-break: break-all; font-size: 0.85rem;"></a>
+</div>
+</div>
+</section>
+<section style="padding: 4rem 0;">
 <div class="container">
 <div class="blog-grid" id="crescent-line-grid">
 <p style="text-align: center; color: var(--text-secondary); width: 100%;">Loading posts...</p>
@@ -256,6 +269,6 @@
 <!-- CMS Loader handles fetching blog.json -->
 
 
-<script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
+<script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
 </html>
 
