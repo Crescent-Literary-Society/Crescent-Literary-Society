@@ -1,26 +1,12 @@
 {
   "posts": [
     {
-      "title": "CLS HAS DONE AN AMAZING JOB",
-      "date": "2026-05-23T00:22:00.000+05:30",
-      "author": "AYAAN",
-      "body": "HEHE",
-      "slug": "cls"
-    },
-    {
       "title": "CRESCENT LIT SOC",
       "date": "2026-05-24T23:58:00.000+05:30",
       "author": "AYAAAN",
       "thumbnail": "/assets/uploads/img_2347.jpg",
       "body": "\n\nCrescent Literary Society (CLS) is a vibrant community of students brought together by a shared love for literature, creativity, and expression. The society serves as a platform where individuals can explore their talents in writing, speaking, reading, debating, poetry, storytelling, and other literary activities. CLS believes that literature is more than just words on paper — it is a way to inspire thoughts, connect people, and create meaningful conversations. Through various events, workshops, competitions, and discussions, the society encourages students to step out of their comfort zones and express themselves confidently. CLS aims to create an environment where creativity is appreciated and every voice is valued. Members of the society work together to organize engaging activities that help improve communication skills, critical thinking, and artistic expression. From poetry slams and open mics to debates and creative writing sessions, CLS provides opportunities for students to learn, perform, and grow. The society also promotes teamwork, leadership, and collaboration among students while nurturing a strong literary culture within the campus. CLS welcomes everyone, whether they are experienced writers or beginners discovering their passion for literature for the first time. By bringing together people with different ideas and perspectives, the society creates a space filled with imagination, inspiration, and intellectual growth. Crescent Literary Society continues to motivate students to share their stories, celebrate creativity, and keep the spirit of literature alive in the community.",
       "slug": "crescentlitcos"
-    },
-    {
-      "title": "EDitorial",
-      "slug": "editorial",
-      "date": "2026-06-21T16:05:00.000+05:30",
-      "author": "AYAAAN",
-      "body": "Zanaib, nubair"
     }
   ]
 }
