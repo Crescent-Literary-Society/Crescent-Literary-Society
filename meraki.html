@@ -75,7 +75,7 @@
     }
   </style>
 
-<meta content="website" property="og:type"/><meta content="Meraki Magazine | Crescent Literary Society" property="og:title"/><meta content="Dive into Meraki, our flagship student literary magazine full of bold, contemplative fiction, poetry, and opinions." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/logo/logo.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/meraki.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/meraki.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/nav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script defer="True" src="js/theme.js"></script><script type="application/ld+json">
+<meta content="website" property="og:type"/><meta content="Meraki Magazine | Crescent Literary Society" property="og:title"/><meta content="Dive into Meraki, our flagship student literary magazine full of bold, contemplative fiction, poetry, and opinions." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/logo/logo.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/meraki.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/meraki.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/pillnav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -105,23 +105,70 @@
 </head>
 <body>
 <!-- NAVIGATION -->
-<nav aria-label="Main navigation" class="site-nav" id="main-nav" role="navigation">
-<div class="nav-inner">
-<a aria-label="Crescent Literary Society — Home" class="nav-logo" href="index.html">
+<div class="pill-nav-container" id="main-nav">
+<nav aria-label="Main navigation" class="pill-nav" role="navigation">
+<a aria-label="Crescent Literary Society — Home" class="pill-logo" href="index.html">
 <img alt="Crescent Literary Society Logo" height="50" loading="eager" src="assets/logo/logo.jpg" width="50"/>
-<div class="nav-logo-text">
-<span class="nav-logo-name">Crescent</span>
-<span class="nav-logo-sub">LITERARY SOCIETY</span>
-</div>
+<span class="pill-logo-text">
+<span class="pill-logo-name">Crescent</span>
+<span class="pill-logo-sub">LITERARY SOCIETY</span>
+</span>
 </a>
-<button aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation menu" class="nav-hamburger" id="nav-hamburger">
-<span></span><span></span><span></span>
+<div class="pill-nav-items desktop-only">
+<ul class="pill-list" role="menubar">
+<li role="none">
+<a class="pill" href="index.html" id="nav-home" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Home</span><span class="pill-label-hover" aria-hidden="true">Home</span></span></a>
+</li>
+<li class="has-dropdown" role="none">
+<a class="pill" href="about.html" id="nav-about" role="menuitem" aria-haspopup="true" aria-expanded="false"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">About</span><span class="pill-label-hover" aria-hidden="true">About</span></span><span class="pill-caret" aria-hidden="true"></span></a>
+<ul class="pill-dropdown" role="menu">
+<li role="none"><a href="about.html#what-we-do" role="menuitem">What We Do</a></li>
+<li role="none"><a href="about.html#history" role="menuitem">History</a></li>
+<li role="none"><a href="about.html#members" role="menuitem">Members</a></li>
+<li role="none"><a href="about.html#awards" role="menuitem">Awards</a></li>
+<li role="none"><a href="connect.html" role="menuitem">Contact</a></li>
+</ul>
+</li>
+<li class="has-dropdown" role="none">
+<a class="pill" href="index.html#wings" id="nav-wings" role="menuitem" aria-haspopup="true" aria-expanded="false"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Wings</span><span class="pill-label-hover" aria-hidden="true">Wings</span></span><span class="pill-caret" aria-hidden="true"></span></a>
+<ul class="pill-dropdown" role="menu">
+<li role="none"><a href="house-of-debaters.html" role="menuitem">House of debaters</a></li>
+<li role="none"><a href="improv.html" role="menuitem">Improvisational Theatre</a></li>
+<li role="none"><a href="writers-guild.html" role="menuitem">Writer's Guild</a></li>
+<li role="none"><a href="quizzers-circuit.html" role="menuitem">Quizzers Circuit</a></li>
+</ul>
+</li>
+<li class="has-dropdown" role="none">
+<a class="pill" href="editorial-board.html" id="nav-editorial" role="menuitem" aria-haspopup="true" aria-expanded="false"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Editorial Board</span><span class="pill-label-hover" aria-hidden="true">Editorial Board</span></span><span class="pill-caret" aria-hidden="true"></span></a>
+<ul class="pill-dropdown" role="menu">
+<li role="none"><a href="meraki.html" role="menuitem">Meraki</a></li>
+<li role="none"><a href="obverse.html" role="menuitem">Obverse</a></li>
+<li role="none"><a href="crescent-line.html" role="menuitem">Crescent Line</a></li>
+</ul>
+</li>
+<li role="none">
+<a class="pill" href="blog.html" id="nav-blog" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Blogs</span><span class="pill-label-hover" aria-hidden="true">Blogs</span></span></a>
+</li>
+<li role="none">
+<a class="pill" href="/recent-activity.html" id="nav-activity" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Recent Activity</span><span class="pill-label-hover" aria-hidden="true">Recent Activity</span></span></a>
+</li>
+</ul>
+</div>
+<div class="pill-nav-right">
+
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu" class="mobile-menu-button mobile-only" id="nav-hamburger" type="button">
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
 </button>
-<ul class="nav-menu" id="nav-menu" role="list">
-<li><a href="index.html" id="nav-home">Home</a></li>
-<li class="has-dropdown">
-<a href="about.html" id="nav-about">About</a>
-<ul class="nav-dropdown" role="list">
+</div>
+</nav>
+<div class="mobile-menu-popover mobile-only" id="mobile-menu">
+<ul class="mobile-menu-list">
+<li><a class="mobile-menu-link" href="index.html">Home</a></li>
+<li class="mobile-menu-group">
+<button class="mobile-menu-link" type="button" aria-expanded="false"><span>About</span><span class="mobile-caret" aria-hidden="true"></span></button>
+<ul class="mobile-menu-sublist">
+<li><a href="about.html">About overview</a></li>
 <li><a href="about.html#what-we-do">What We Do</a></li>
 <li><a href="about.html#history">History</a></li>
 <li><a href="about.html#members">Members</a></li>
@@ -129,27 +176,30 @@
 <li><a href="connect.html">Contact</a></li>
 </ul>
 </li>
-<li class="has-dropdown">
-<a href="index.html#wings" id="nav-wings">Wings</a>
-<ul class="nav-dropdown" role="list">
+<li class="mobile-menu-group">
+<button class="mobile-menu-link" type="button" aria-expanded="false"><span>Wings</span><span class="mobile-caret" aria-hidden="true"></span></button>
+<ul class="mobile-menu-sublist">
+<li><a href="index.html#wings">Wings overview</a></li>
 <li><a href="house-of-debaters.html">House of debaters</a></li>
 <li><a href="improv.html">Improvisational Theatre</a></li>
 <li><a href="writers-guild.html">Writer's Guild</a></li>
 <li><a href="quizzers-circuit.html">Quizzers Circuit</a></li>
 </ul>
 </li>
-<li class="has-dropdown">
-<a class="active" href="editorial-board.html" id="nav-editorial">Editorial Board</a>
-<ul class="nav-dropdown" role="list">
+<li class="mobile-menu-group">
+<button class="mobile-menu-link" type="button" aria-expanded="false"><span>Editorial Board</span><span class="mobile-caret" aria-hidden="true"></span></button>
+<ul class="mobile-menu-sublist">
+<li><a href="editorial-board.html">Editorial Board overview</a></li>
 <li><a href="meraki.html">Meraki</a></li>
 <li><a href="obverse.html">Obverse</a></li>
 <li><a href="crescent-line.html">Crescent Line</a></li>
 </ul>
 </li>
-<li><a href="blog.html" id="nav-blog">Blogs</a></li>
-<li class="nav-item-theme" style="display: flex; align-items: center;"><button class="btn-ghost" id="theme-toggle" style="padding: 0.4rem 0.8rem; margin-left: 1rem; cursor: pointer; border-radius: var(--radius); font-family: var(--font-display); background: transparent; display: flex; align-items: center; gap: 0.5rem;">Theme 🌓</button></li></ul>
+<li><a class="mobile-menu-link" href="blog.html">Blogs</a></li>
+<li><a class="mobile-menu-link" href="/recent-activity.html">Recent Activity</a></li>
+</ul>
 </div>
-</nav>
+</div>
 <!-- PAGE HERO -->
 <header class="page-hero" id="meraki-hero" style="min-height: 300px; height: 40vh;">
 <div aria-label="CLS Campus" class="page-hero-bg" role="img" style="background-image: url('assets/hero/hero-bg.jpg');"></div>
@@ -186,7 +236,6 @@
 <!-- Brand -->
 <div class="footer-brand">
 <div class="footer-logo-wrap">
-<!-- REPLACE: CLS logo for footer -->
 <img alt="Crescent Literary Society" height="46" loading="eager" src="assets/logo/logo.jpg" width="46"/>
 <div>
 <div class="footer-logo-name">Crescent Literary Society</div>
@@ -257,6 +306,6 @@
 <!-- CMS Loader handles fetching blog.json -->
 
 
-<script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
+<script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/pillnav.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
 </html>
 

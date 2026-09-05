@@ -1,0 +1,42 @@
+{
+  "debaters": {
+    "image": "/assets/clubs/house-of-debators.jpg",
+    "caption": "House of debaters in session",
+    "order": 1
+  },
+  "improv": {
+    "image": "/assets/clubs/improv.jpg",
+    "caption": "Improvisational Theatre performance",
+    "order": 2
+  },
+  "writersGuild": {
+    "image": "/assets/clubs/writers-guild.jpg",
+    "caption": "Writer's Guild manuscript",
+    "order": 3
+  },
+  "quizzers": {
+    "image": "/assets/clubs/quizzers-circuit.jpg",
+    "caption": "Quizzers Circuit buzzer round",
+    "order": 4
+  },
+  "literaryPoster": {
+    "image": "/assets/blog/blog-thumb-1.jpg",
+    "caption": "CLS blog feature",
+    "order": 5
+  },
+  "literaryGraphic": {
+    "image": "/assets/blog/blog-thumb-2.jpg",
+    "caption": "CLS blog feature",
+    "order": 6
+  },
+  "manuscriptDesk": {
+    "image": "/assets/blog/blog-thumb-3.jpg",
+    "caption": "CLS blog feature",
+    "order": 7
+  },
+  "community": {
+    "image": "/assets/about/cls-outing-2019.jpg",
+    "caption": "CLS society outing",
+    "order": 8
+  }
+}

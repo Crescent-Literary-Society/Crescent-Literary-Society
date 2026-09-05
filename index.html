@@ -5,6 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Home | Crescent Literary Society</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 <meta content="Welcome to the Crescent Literary Society (CLS), established in 2006. Home to writers, debaters, quizzer, and theatre performers. With Inclusion comes Strength." name="description"/>
 <meta content="Crescent Literary Society, CLS, debate, improv, writers guild, quizzers, literary society" name="keywords"/>
 <meta name="google-site-verification" content="_SNYhbfiAa-uR-gpTC6WoLw7Wzjs-_AGDMwg-oFhYTs" />
@@ -20,7 +21,7 @@
 
 
 
-<meta content="website" property="og:type"/><meta content="Home | Crescent Literary Society" property="og:title"/><meta content="Welcome to the Crescent Literary Society (CLS), established in 2006. Home to writers, debaters, quizzer, and theatre performers. With Inclusion comes Strength." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/logo/logo.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/index.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/index.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/nav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script defer="True" src="js/theme.js"></script>
+<meta content="website" property="og:type"/><meta content="Home | Crescent Literary Society" property="og:title"/><meta content="Welcome to the Crescent Literary Society (CLS), established in 2006. Home to writers, debaters, quizzer, and theatre performers. With Inclusion comes Strength." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/logo/logo.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/index.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/index.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/pillnav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/text-loop.css" rel="stylesheet"/><link href="css/gallery.css" rel="stylesheet"/><link href="css/image-trail.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -53,26 +54,70 @@
 <!-- ============================================================
        NAVIGATION
        ============================================================ -->
-<nav aria-label="Main navigation" class="site-nav" id="main-nav" role="navigation">
-<div class="nav-inner">
-<a aria-label="Crescent Literary Society — Home" class="nav-logo" href="index.html">
-<!-- REPLACE: CLS official logo -->
+<div class="pill-nav-container" id="main-nav">
+<nav aria-label="Main navigation" class="pill-nav" role="navigation">
+<a aria-label="Crescent Literary Society — Home" class="pill-logo" href="index.html">
 <img alt="Crescent Literary Society Logo" height="50" loading="eager" src="assets/logo/logo.jpg" width="50"/>
-<div class="nav-logo-text">
-<span class="nav-logo-name">Crescent</span>
-<span class="nav-logo-sub">LITERARY SOCIETY</span>
-</div>
+<span class="pill-logo-text">
+<span class="pill-logo-name">Crescent</span>
+<span class="pill-logo-sub">LITERARY SOCIETY</span>
+</span>
 </a>
-<button aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation menu" class="nav-hamburger" id="nav-hamburger">
-<span></span>
-<span></span>
-<span></span>
+<div class="pill-nav-items desktop-only">
+<ul class="pill-list" role="menubar">
+<li role="none">
+<a class="pill" href="index.html" id="nav-home" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Home</span><span class="pill-label-hover" aria-hidden="true">Home</span></span></a>
+</li>
+<li class="has-dropdown" role="none">
+<a class="pill" href="about.html" id="nav-about" role="menuitem" aria-haspopup="true" aria-expanded="false"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">About</span><span class="pill-label-hover" aria-hidden="true">About</span></span><span class="pill-caret" aria-hidden="true"></span></a>
+<ul class="pill-dropdown" role="menu">
+<li role="none"><a href="about.html#what-we-do" role="menuitem">What We Do</a></li>
+<li role="none"><a href="about.html#history" role="menuitem">History</a></li>
+<li role="none"><a href="about.html#members" role="menuitem">Members</a></li>
+<li role="none"><a href="about.html#awards" role="menuitem">Awards</a></li>
+<li role="none"><a href="connect.html" role="menuitem">Contact</a></li>
+</ul>
+</li>
+<li class="has-dropdown" role="none">
+<a class="pill" href="#wings" id="nav-wings" role="menuitem" aria-haspopup="true" aria-expanded="false"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Wings</span><span class="pill-label-hover" aria-hidden="true">Wings</span></span><span class="pill-caret" aria-hidden="true"></span></a>
+<ul class="pill-dropdown" role="menu">
+<li role="none"><a href="house-of-debaters.html" role="menuitem">House of debaters</a></li>
+<li role="none"><a href="improv.html" role="menuitem">Improvisational Theatre</a></li>
+<li role="none"><a href="writers-guild.html" role="menuitem">Writer's Guild</a></li>
+<li role="none"><a href="quizzers-circuit.html" role="menuitem">Quizzers Circuit</a></li>
+</ul>
+</li>
+<li class="has-dropdown" role="none">
+<a class="pill" href="editorial-board.html" id="nav-editorial" role="menuitem" aria-haspopup="true" aria-expanded="false"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Editorial Board</span><span class="pill-label-hover" aria-hidden="true">Editorial Board</span></span><span class="pill-caret" aria-hidden="true"></span></a>
+<ul class="pill-dropdown" role="menu">
+<li role="none"><a href="meraki.html" role="menuitem">Meraki</a></li>
+<li role="none"><a href="obverse.html" role="menuitem">Obverse</a></li>
+<li role="none"><a href="crescent-line.html" role="menuitem">Crescent Line</a></li>
+</ul>
+</li>
+<li role="none">
+<a class="pill" href="blog.html" id="nav-blog" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Blogs</span><span class="pill-label-hover" aria-hidden="true">Blogs</span></span></a>
+</li>
+<li role="none">
+<a class="pill" href="/recent-activity.html" id="nav-activity" role="menuitem"><span class="hover-circle" aria-hidden="true"></span><span class="label-stack"><span class="pill-label">Recent Activity</span><span class="pill-label-hover" aria-hidden="true">Recent Activity</span></span></a>
+</li>
+</ul>
+</div>
+<div class="pill-nav-right">
+
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu" class="mobile-menu-button mobile-only" id="nav-hamburger" type="button">
+<span class="hamburger-line"></span>
+<span class="hamburger-line"></span>
 </button>
-<ul class="nav-menu" id="nav-menu" role="list">
-<li><a class="active" href="index.html" id="nav-home">Home</a></li>
-<li class="has-dropdown">
-<a href="about.html" id="nav-about">About</a>
-<ul class="nav-dropdown" role="list">
+</div>
+</nav>
+<div class="mobile-menu-popover mobile-only" id="mobile-menu">
+<ul class="mobile-menu-list">
+<li><a class="mobile-menu-link" href="index.html">Home</a></li>
+<li class="mobile-menu-group">
+<button class="mobile-menu-link" type="button" aria-expanded="false"><span>About</span><span class="mobile-caret" aria-hidden="true"></span></button>
+<ul class="mobile-menu-sublist">
+<li><a href="about.html">About overview</a></li>
 <li><a href="about.html#what-we-do">What We Do</a></li>
 <li><a href="about.html#history">History</a></li>
 <li><a href="about.html#members">Members</a></li>
@@ -80,34 +125,37 @@
 <li><a href="connect.html">Contact</a></li>
 </ul>
 </li>
-<li class="has-dropdown">
-<a href="#wings" id="nav-wings">Wings</a>
-<ul class="nav-dropdown" role="list">
+<li class="mobile-menu-group">
+<button class="mobile-menu-link" type="button" aria-expanded="false"><span>Wings</span><span class="mobile-caret" aria-hidden="true"></span></button>
+<ul class="mobile-menu-sublist">
+<li><a href="#wings">Wings overview</a></li>
 <li><a href="house-of-debaters.html">House of debaters</a></li>
 <li><a href="improv.html">Improvisational Theatre</a></li>
 <li><a href="writers-guild.html">Writer's Guild</a></li>
 <li><a href="quizzers-circuit.html">Quizzers Circuit</a></li>
 </ul>
 </li>
-<li class="has-dropdown">
-<a href="editorial-board.html" id="nav-editorial">Editorial Board</a>
-<ul class="nav-dropdown" role="list">
+<li class="mobile-menu-group">
+<button class="mobile-menu-link" type="button" aria-expanded="false"><span>Editorial Board</span><span class="mobile-caret" aria-hidden="true"></span></button>
+<ul class="mobile-menu-sublist">
+<li><a href="editorial-board.html">Editorial Board overview</a></li>
 <li><a href="meraki.html">Meraki</a></li>
 <li><a href="obverse.html">Obverse</a></li>
 <li><a href="crescent-line.html">Crescent Line</a></li>
 </ul>
 </li>
-<li><a href="blog.html" id="nav-blog">Blogs</a></li>
-<li class="nav-item-theme" style="display: flex; align-items: center;"><button class="btn-ghost" id="theme-toggle" style="padding: 0.4rem 0.8rem; margin-left: 1rem; cursor: pointer; border-radius: var(--radius); font-family: var(--font-display); background: transparent; display: flex; align-items: center; gap: 0.5rem;">Theme 🌓</button></li></ul>
+<li><a class="mobile-menu-link" href="blog.html">Blogs</a></li>
+<li><a class="mobile-menu-link" href="/recent-activity.html">Recent Activity</a></li>
+</ul>
 </div>
-</nav>
+</div>
 <!-- ============================================================
        HERO — Full viewport
        ============================================================ -->
 <section aria-labelledby="hero-title" class="main-hero" id="hero">
 <!-- HERO CAROUSEL -->
 <div class="hero-carousel" id="hero-carousel">
-<!-- You can add/change images here for the carousel -->
+<!-- Fallback slides only — replaced at runtime from data/carousel.json (edit via /admin/). -->
 <div aria-label="Slide 1" class="main-hero-bg active" role="img" style="background-image: url('assets/hero/hero-bg.jpg');"></div>
 <div aria-label="Slide 2" class="main-hero-bg" role="img" style="background-image: url('assets/clubs/house-of-debators.jpg');"></div>
 <div aria-label="Slide 3" class="main-hero-bg" role="img" style="background-image: url('assets/clubs/writers-guild.jpg');"></div>
@@ -128,47 +176,92 @@
 </div>
 </section>
 <!-- ============================================================
-       STATS BAR
+       OUR WINGS — horizontal scroll gallery
        ============================================================ -->
-<div class="stats-bar">
+<section aria-labelledby="gallery-title" class="gallery-section">
 <div class="container">
-<div class="stats-grid stagger">
-<div class="stat-item fade-up">
-<div class="stat-number">20<span>+</span></div>
-<div class="stat-label">Years Strong</div>
-</div>
-<div class="stat-item fade-up">
-<div class="stat-number">4<span></span></div>
-<div class="stat-label">Wings</div>
-</div>
-<div class="stat-item fade-up">
-<div class="stat-number">100<span>+</span></div>
-<div class="stat-label">Members</div>
-</div>
-<div class="stat-item fade-up">
-<div class="stat-number"><span></span>∞</div>
-<div class="stat-label">Memories Made</div>
-</div>
-</div>
-</div>
-</div>
-<!-- ============================================================
-       ABOUT SNIPPET — Full-width carousel
-       ============================================================ -->
-<section aria-labelledby="about-heading" class="about-fullwidth bg-alternate" id="about-section">
-<!-- Text Content -->
-<div class="container about-fw-content fade-up">
-<span class="eyebrow">Who We Are</span>
-<h2 id="about-heading">About Us</h2>
+<div class="section-header centered">
+<span class="eyebrow">Our Community</span>
+<h2 id="gallery-title">Our Wings</h2>
 <div class="divider"></div>
-<p class="about-lead">The Crescent Literary Society was initiated in the year 2006 with the chief objective to hone the literary skills of the students — with a dash of fun. We aim to enhance leadership qualities and interpersonal communication skills.</p>
-<p class="about-fw-sub">A family of self-motivated, creative, confident, adventurous and fearless students with one true mission: to make some unforgettable memories.</p>
-<div class="about-snippet-actions">
-<a class="btn btn-gold" href="about.html" id="about-learn-more-btn">With Inclusion comes Strength</a>
+</div>
+</div>
+<div class="scroll-container" id="gallery-scroll">
+<div class="sticky-wrapper">
+<div class="gallery" id="gallery-track">
+<a aria-label="House of debaters" class="gallery-item" data-wing-image="houseOfDebaters" href="house-of-debaters.html" title="House of debaters — parliamentary debate wing of CLS">
+<div class="item-content">
+<span class="item-number">01</span>
+<h3>House of debaters</h3>
+</div>
+</a>
+<a aria-label="Improvisational Theatre" class="gallery-item" data-wing-image="improv" href="improv.html" title="Improvisational Theatre — live theatre performance wing of CLS">
+<div class="item-content">
+<span class="item-number">02</span>
+<h3>Improvisational Theatre</h3>
+</div>
+</a>
+<a aria-label="Writer's Guild" class="gallery-item" data-wing-image="writersGuild" href="writers-guild.html" title="Writer's Guild — creative writing and literary magazine wing of CLS">
+<div class="item-content">
+<span class="item-number">03</span>
+<h3>Writer's Guild</h3>
+</div>
+</a>
+<a aria-label="Quizzers Circuit" class="gallery-item" data-wing-image="quizzersCircuit" href="quizzers-circuit.html" title="Quizzers Circuit — trivia and quiz competition wing of CLS">
+<div class="item-content">
+<span class="item-number">04</span>
+<h3>Quizzers Circuit</h3>
+</div>
+</a>
+<a aria-label="Editorial Board" class="gallery-item" data-wing-image="editorialBoard" href="editorial-board.html" title="Editorial Board — the students who run CLS">
+<div class="item-content">
+<span class="item-number">05</span>
+<h3>Editorial Board</h3>
+</div>
+</a>
+</div>
 </div>
 </div>
 </section>
-<hr class="section-rule"/>
+<!-- ============================================================
+       MOMENTS — cursor image trail
+       ============================================================ -->
+<section aria-labelledby="trail-title" class="trail-section">
+<div class="container">
+<div class="section-header centered">
+<span class="eyebrow">Our Community</span>
+<h2 id="trail-title">Moments</h2>
+<div class="divider"></div>
+<p>Twenty years of words, stages, and the people behind them.</p>
+</div>
+</div>
+<div class="image-trail" id="image-trail">
+<div class="content__img" data-moment="debaters" role="img" aria-label="House of debaters in session">
+<div class="content__img-inner"></div>
+</div>
+<div class="content__img" data-moment="improv" role="img" aria-label="Improvisational Theatre performance">
+<div class="content__img-inner"></div>
+</div>
+<div class="content__img" data-moment="writersGuild" role="img" aria-label="Writer's Guild manuscript">
+<div class="content__img-inner"></div>
+</div>
+<div class="content__img" data-moment="quizzers" role="img" aria-label="Quizzers Circuit buzzer round">
+<div class="content__img-inner"></div>
+</div>
+<div class="content__img" data-moment="literaryPoster" role="img" aria-label="CLS blog feature">
+<div class="content__img-inner"></div>
+</div>
+<div class="content__img" data-moment="literaryGraphic" role="img" aria-label="CLS blog feature">
+<div class="content__img-inner"></div>
+</div>
+<div class="content__img" data-moment="manuscriptDesk" role="img" aria-label="CLS blog feature">
+<div class="content__img-inner"></div>
+</div>
+<div class="content__img" data-moment="community" role="img" aria-label="CLS society outing">
+<div class="content__img-inner"></div>
+</div>
+</div>
+</section>
 <!-- ============================================================
        RECENT UPDATES — newest items across every publication
        ============================================================ -->
@@ -211,156 +304,14 @@
 </div>
 </div>
 </section>
-<hr class="section-rule"/>
 <!-- ============================================================
-       OUR WINGS — 4-card grid
+       ABOUT US — wave ribbon
        ============================================================ -->
-<section aria-labelledby="wings-title" class="wings-section" id="wings">
-<div class="container">
-<div class="section-header centered fade-up">
-<span class="eyebrow">Our Community</span>
-<h2 id="wings-title">Our Wings</h2>
-<div class="divider"></div>
-<p>Four disciplines. One literary family.</p>
-</div>
-<div class="grid-4 stagger" id="wings-grid" role="list">
-<!-- Wing 1: House of debaters -->
-<article class="card wings-card" data-wing-carousel="data/debaters-carousel.json" role="listitem">
-<div class="card-img-wrap">
-<!-- REPLACE: [debaters] Dramatic debate podium/event photo -->
-<img alt="House of debaters — parliamentary debate wing of CLS" class="card-img" height="200" loading="lazy" src="assets/clubs/house-of-debators.jpg" width="360"/>
-</div>
-<div class="card-body">
-<h3>House of debaters</h3>
-<p>Engage in structured parliamentary debate, sharpen argumentation, and learn to defend any position with clarity and conviction.</p>
-<a class="card-link" href="house-of-debaters.html" id="wings-debaters-link">
-              Explore <span aria-hidden="true">→</span>
+<section aria-labelledby="about-loop-title" class="about-loop">
+<h2 class="about-loop-title" id="about-loop-title">About us</h2>
+<a class="about-loop-link" href="about.html" id="about-loop-btn">
+<div class="text-loop" id="about-text-loop"></div>
 </a>
-</div>
-</article>
-<!-- Wing 2: Improv -->
-<article class="card wings-card" data-wing-carousel="data/improv-carousel.json" role="listitem">
-<div class="card-img-wrap">
-<!-- REPLACE: [IMPROV] Stage performance / drama event photo -->
-<img alt="Improvisational Theatre — live theatre performance wing of CLS" class="card-img" height="200" loading="lazy" src="assets/clubs/improv.jpg" width="360"/>
-</div>
-<div class="card-body">
-<h3>Improvisational Theatre</h3>
-<p>Spontaneous. Bold. Unpredictable. Our improvisational theatre wing trains quick thinking, stage presence, and creative confidence through live performance.</p>
-<a class="card-link" href="improv.html" id="wings-improv-link">
-              Explore <span aria-hidden="true">→</span>
-</a>
-</div>
-</article>
-<!-- Wing 3: Writer's Guild -->
-<article class="card wings-card" data-wing-carousel="data/writers-carousel.json" role="listitem">
-<div class="card-img-wrap">
-<!-- REPLACE: [WRITERS] Writing / literary magazine / notebook photo -->
-<img alt="Writer's Guild — creative writing and literary magazine wing of CLS" class="card-img" height="200" loading="lazy" src="assets/clubs/writers-guild.jpg" width="360"/>
-</div>
-<div class="card-body">
-<h3>Writer's Guild</h3>
-<p>Essays, fiction, poetry, and opinion — Writer's Guild is where ink meets ideas. Publish in <em>Obverse</em>, our student literary magazine.</p>
-<a class="card-link" href="writers-guild.html" id="wings-writers-link">
-              Explore <span aria-hidden="true">→</span>
-</a>
-</div>
-</article>
-<!-- Wing 4: Quizzers Circuit -->
-<article class="card wings-card" data-wing-carousel="data/quizzers-carousel.json" role="listitem">
-<div class="card-img-wrap">
-<!-- REPLACE: [QUIZZERS] Quiz competition / buzzer event photo -->
-<img alt="Quizzers Circuit — trivia and quiz competition wing of CLS" class="card-img" height="200" loading="lazy" src="assets/clubs/quizzers-circuit.jpg" width="360"/>
-</div>
-<div class="card-body">
-<h3>Quizzers Circuit</h3>
-<p>From general knowledge to themed trivia showdowns — Quizzers Circuit is for the curious, the competitive, and the brilliantly obsessed.</p>
-<a class="card-link" href="quizzers-circuit.html" id="wings-quizzers-link">
-              Explore <span aria-hidden="true">→</span>
-</a>
-</div>
-</article>
-</div>
-</div>
-</section>
-<hr class="section-rule"/>
-<!-- ============================================================
-       BLOG — 3 latest posts
-       ============================================================ -->
-<section aria-labelledby="blog-title" class="blog-section bg-alternate" id="blog">
-<div class="container">
-<div class="section-header fade-up">
-<span class="eyebrow">Latest Writing</span>
-<h2 id="blog-title">From the Blog</h2>
-<div class="divider"></div>
-</div>
-<div class="grid-3 stagger" id="blog-grid">
-<!-- Blog 1 -->
-<article class="card blog-card">
-<div class="card-img-wrap">
-<!-- REPLACE: [BLOG 1] Editorial image — feminism / leadership theme -->
-<img alt="Feminism Without Unity — article thumbnail" class="card-img" height="200" loading="lazy" src="assets/blog/blog-thumb-1.jpg" width="360"/>
-</div>
-<div class="card-body">
-<span class="eyebrow" style="margin-bottom:0.5rem;">Opinion</span>
-<h4>Feminism Without Unity: Quiet Betrayal of Privileged Leadership</h4>
-<p>What does women's empowerment really mean when those in power leave others behind?</p>
-<a class="card-link" href="#" id="blog-link-1">Read More <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<!-- Blog 2 -->
-<article class="card blog-card">
-<div class="card-img-wrap">
-<!-- REPLACE: [BLOG 2] Abstract / poetic moody image -->
-<img alt="The Split — poetry thumbnail" class="card-img" height="200" loading="lazy" src="assets/blog/blog-thumb-2.jpg" width="360"/>
-</div>
-<div class="card-body">
-<span class="eyebrow" style="margin-bottom:0.5rem;">Poetry</span>
-<h4>The Split</h4>
-<p>A sharp stab, a bleeding wound... a poem from the Crescent archives.</p>
-<a class="card-link" href="#" id="blog-link-2">Read More <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<!-- Blog 3 -->
-<article class="card blog-card">
-<div class="card-img-wrap">
-<!-- REPLACE: [BLOG 3] Writing campaign / reflective editorial image -->
-<img alt="From What Capacity Do I Write — reflection thumbnail" class="card-img" height="200" loading="lazy" src="assets/blog/blog-thumb-3.jpg" width="360"/>
-</div>
-<div class="card-body">
-<span class="eyebrow" style="margin-bottom:0.5rem;">Reflection</span>
-<h4>From What Capacity Do I Write?</h4>
-<p>When we ran the Unapologetic campaign, one teacher's question stirred something deep.</p>
-<a class="card-link" href="#" id="blog-link-3">Read More <span aria-hidden="true">→</span></a>
-</div>
-</article>
-</div>
-</div>
-</section>
-<hr class="section-rule"/>
-<!-- ============================================================
-       OBVERSE MAGAZINE FEATURE
-       ============================================================ -->
-<section aria-labelledby="obverse-title" class="obverse-section" id="obverse">
-<div class="container">
-<div class="obverse-grid">
-<div class="obverse-img fade-up">
-<!-- REPLACE: [OBVERSE] Obverse literary magazine cover photo -->
-<img alt="Obverse — CLS Literary Magazine" height="460" loading="lazy" src="assets/magazine/obverse-cover.jpg" width="320"/>
-</div>
-<div class="obverse-content fade-up delay-2">
-<span class="eyebrow">CLS Literary Magazine</span>
-<h2 id="obverse-title">Obverse</h2>
-<div class="divider"></div>
-<h3>When the Mountains Wept: A Nation's Grief in the Shadow of Pahalgam</h3>
-<blockquote>
-            "April 22, 2025, started like any other day in Baisaren Valley. By noon, the valley was soaked in blood. Twenty-six people shot by militants — and a nation left to grieve in collective silence."
-          </blockquote>
-<p>Our writers don't shy away from the world. <em>Obverse</em> publishes the courageous, the contemplative, and the necessary — voices that refuse to be silenced.</p>
-<a class="btn btn-gold" href="writers-guild.html" id="obverse-read-btn" style="margin-top:2rem;">Read More →</a>
-</div>
-</div>
-</div>
 </section>
 <!-- ============================================================
        FOOTER
@@ -372,7 +323,6 @@
 <!-- Brand -->
 <div class="footer-brand">
 <div class="footer-logo-wrap">
-<!-- REPLACE: CLS logo for footer -->
 <img alt="Crescent Literary Society" height="46" loading="eager" src="assets/logo/logo.jpg" width="46"/>
 <div>
 <div class="footer-logo-name">Crescent Literary Society</div>
@@ -440,19 +390,6 @@
 </footer>
 
 
-
-
-<script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
-<script defer="True" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script><script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/carousel.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
+<script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script><script defer="True" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/pillnav.js"></script><script defer="True" src="js/carousel.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/text-loop.js"></script><script defer="True" src="js/gallery.js"></script><script defer="True" src="js/image-trail.js"></script></body>
 </html>
 

@@ -1,13 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Obverse Magazine | Crescent Literary Society</title>
-<meta content="Read Obverse, the flagship literary magazine of the Crescent Literary Society — courageous essays, poetry, fiction, and opinion." name="description"/>
+<title>Recent Activity | Crescent Literary Society</title>
+<meta content="Browse creative writing, poetry, opinions, and articles published by the brilliant minds of the Crescent Literary Society." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+
+
+
+
 
 <style>
     .blog-grid {
@@ -70,7 +75,7 @@
     }
   </style>
 
-<meta content="website" property="og:type"/><meta content="Obverse Magazine | Crescent Literary Society" property="og:title"/><meta content="Read Obverse, the flagship literary magazine of the Crescent Literary Society — courageous essays, poetry, fiction, and opinion." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/magazine/obverse-cover.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/obverse.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/obverse.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/pillnav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script type="application/ld+json">
+<meta content="website" property="og:type"/><meta content="Recent Activity | Crescent Literary Society" property="og:title"/><meta content="The most recently published writing, magazines and newsletters from the Crescent Literary Society." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/logo/logo.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/recent-activity.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/recent-activity.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/pillnav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/recent-activity.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -196,34 +201,26 @@
 </div>
 </div>
 <!-- PAGE HERO -->
-<header class="page-hero" id="obverse-hero" style="min-height: 300px; height: 40vh;">
-<div aria-label="CLS Campus" class="page-hero-bg" role="img" style="background-image: url('assets/magazine/obverse-cover.jpg');"></div>
+<header class="page-hero" id="activity-hero" style="min-height: 300px; height: 40vh;">
+<div aria-label="CLS Campus" class="page-hero-bg" role="img" style="background-image: url('assets/hero/hero-bg.jpg');"></div>
 <div class="page-hero-overlay"></div>
 <div class="container page-hero-content">
-<span class="eyebrow">The Written Word</span>
-<h1>Obverse</h1>
-<p class="hero-sub"><em>"CLS's flagship literary magazine — voices that refuse to be polite about the world."</em></p>
+<span class="eyebrow">From the Society</span>
+<h1>Recent Activity</h1>
+<p class="hero-sub"><em>The latest writing, magazines and newsletters — newest first.</em></p>
 </div>
 </header>
 <!-- MAIN CONTENT -->
 <main>
-<section style="padding: 5rem 0;">
+<section aria-labelledby="activity-heading" class="ra-section">
+<h2 class="ra-visually-hidden" id="activity-heading">Recently published</h2>
+<!-- Tiles are built by js/recent-activity.js from the CMS data files. -->
+<div class="ra-row" id="recent-activity-row"></div>
 <div class="container">
-<div class="blog-grid" id="obverse-grid">
-<p style="text-align: center; color: var(--text-secondary); width: 100%;">Loading posts...</p>
-</div>
-</div>
-</section>
-<section class="fade-up delay-1 bg-alternate" style="padding: 5rem 0; text-align: center;">
-<div class="container">
-<div class="divider" style="margin: 0 auto 3rem auto;"></div>
-<h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Looking for more?</h3>
-<p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Dive into our bi-annual creative magazine.</p>
-<a class="btn btn-gold" href="meraki.html">Read Meraki →</a>
+<div class="ra-status" hidden id="recent-activity-status"></div>
 </div>
 </section>
 </main>
-<!-- FOOTER -->
 <footer class="site-footer" role="contentinfo">
 <div class="container">
 <div class="footer-main">
@@ -297,7 +294,10 @@
 </div>
 </footer>
 
-<!-- CMS Loader handles fetching obverse.json -->
 
-<script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/pillnav.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
+<!-- CMS Loader handles fetching blog.json -->
+
+
+<script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/pillnav.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/recent-activity.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
 </html>
+

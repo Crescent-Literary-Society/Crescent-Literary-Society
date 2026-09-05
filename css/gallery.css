@@ -1,0 +1,154 @@
+/* =========================================================
+   GALLERY — Crescent Literary Society
+   Vertical scroll drives a horizontal card gallery. The
+   sticky wrapper is one card wide and centred; cards spill
+   past it on both sides and are clipped by the body's
+   overflow-x. Motion is driven by js/gallery.js (GSAP).
+   ========================================================= */
+
+.gallery-section {
+  /* How far left of centre the gallery sits at every scroll
+     position. Shifts the view, not the layout. */
+  --gallery-shift: 160px;
+
+  padding: var(--section-pad) 0 0;
+}
+
+/* Tall spacer — its height is the scroll distance the
+   gallery gets to travel through. */
+.scroll-container {
+  position: relative;
+  height: 300vh;
+  /* No overflow property here on purpose. `hidden` would make
+     this a scroll container and kill the sticky wrapper, and
+     `clip` makes ScrollTrigger resolve it as the scroller,
+     which throws start/end off. The card spill is contained by
+     `body { overflow-x: hidden }` (css/global.css:107), which
+     is how the reference handles it too. */
+}
+
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* Shifted here rather than on .gallery, whose transform GSAP
+     rewrites every frame. offsetWidth ignores transforms, so the
+     travel distance the tween measures is unaffected. */
+  transform: translateX(calc(-1 * var(--gallery-shift)));
+  /* Must stay visible — the neighbouring cards are meant to
+     be seen outside the wrapper. */
+  overflow: visible;
+}
+
+.gallery {
+  display: flex;
+  gap: 30px;
+  will-change: transform;
+}
+
+.gallery-item {
+  position: relative;
+  flex-shrink: 0;
+  width: 400px;
+  height: 500px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-card);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  text-decoration: none;
+  transition: transform var(--transition);
+}
+
+.gallery-item:hover {
+  transform: translateY(-6px);
+}
+
+.gallery-item:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 4px;
+}
+
+/* Scrim so the caption stays readable over any photo. */
+.gallery-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.85));
+}
+
+.item-content {
+  position: absolute;
+  z-index: 1;
+  bottom: 30px;
+  left: 30px;
+  right: 30px;
+}
+
+.item-number {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-nav);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--accent-gold);
+}
+
+.gallery-item h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  /* The wrapper only clears 55px here — the desktop shift would
+     push the first card off the left edge. */
+  .gallery-section {
+    --gallery-shift: 40px;
+  }
+
+  .sticky-wrapper {
+    width: 280px;
+  }
+
+  .gallery {
+    gap: 15px;
+  }
+
+  .gallery-item {
+    width: 280px;
+    height: 350px;
+  }
+
+  .gallery-item h3 {
+    font-size: 1.35rem;
+  }
+}
+
+/* No scroll hijacking for anyone who asked for less motion —
+   the gallery becomes a plain swipeable strip. */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-container {
+    height: auto;
+  }
+
+  .sticky-wrapper {
+    position: relative;
+    height: auto;
+    width: 100%;
+    padding: 50px 2rem;
+    overflow-x: auto;
+  }
+
+  .gallery {
+    transform: none !important;
+  }
+}

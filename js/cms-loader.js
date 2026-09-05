@@ -6,14 +6,14 @@
 /* --- Configuration & Utilities --- */
 
 /**
- * Escapes plain text to prevent XSS injection.
- * @param {string} str - The raw text to escape
- * @returns {string} - The escaped HTML string
+ * Normalises a CMS media path for use from a page at the site root.
+ * The CMS stores public paths with a leading slash; the pages link relatively.
+ * @param {string} path - The raw path from a JSON record
+ * @returns {string} - The path without its leading slash
  */
-const escapeHTML = (str) => {
-  const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
+const assetPath = (path) => {
+  const p = path || '';
+  return p.startsWith('/') ? p.substring(1) : p;
 };
 
 /**
@@ -101,10 +101,7 @@ const renderCarousel = (container, data) => {
   data.slides.forEach((slide, index) => {
     const div = document.createElement('div');
     div.className = index === 0 ? 'main-hero-bg active' : 'main-hero-bg';
-    let imgSrc = slide.image || '';
-    if (imgSrc.startsWith('/')) {
-      imgSrc = imgSrc.substring(1);
-    }
+    const imgSrc = assetPath(slide.image);
     div.style.backgroundImage = `url('${imgSrc}')`;
     div.setAttribute('role', 'img');
     div.setAttribute('aria-label', slide.altText || `Slide ${index + 1}`);
@@ -117,84 +114,107 @@ const renderCarousel = (container, data) => {
 };
 
 /**
+ * Renders one post card into a grid container.
+ * Shared by the blog, Meraki and Crescent Line listings, which differ only in
+ * their URL prefix and their fallback strings.
+ * @param {HTMLElement} container - The grid element to append to
+ * @param {object} post - A single post record
+ * @param {object} opts - { urlPrefix, imageAlt, defaultAuthor }
+ * @returns {void}
+ */
+const appendPostCard = (container, post, opts) => {
+  const slug = post.slug || generateSlug(post.title);
+  const dateObj = new Date(post.date);
+  const dateStr = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  const imgSrc = assetPath(post.thumbnail);
+  const plainText = getMarkdownText(post.body || '');
+
+  const card = document.createElement('a');
+  card.className = 'card blog-card fade-up';
+  card.href = `${opts.urlPrefix}/${slug}`;
+  card.style.textDecoration = 'none';
+  card.style.color = 'inherit';
+
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'card-img-wrap';
+
+  const thumbImg = document.createElement('img');
+  thumbImg.src = imgSrc;
+  thumbImg.alt = post.title || opts.imageAlt;
+  thumbImg.className = 'card-img';
+  thumbImg.loading = 'lazy';
+  thumbImg.width = 360;
+  thumbImg.height = 200;
+  imgWrap.appendChild(thumbImg);
+  card.appendChild(imgWrap);
+
+  const contentDiv = document.createElement('div');
+  contentDiv.className = 'card-body';
+
+  const dateSpan = document.createElement('span');
+  dateSpan.className = 'eyebrow';
+  dateSpan.style.marginBottom = '0.5rem';
+  dateSpan.textContent = dateStr;
+  contentDiv.appendChild(dateSpan);
+
+  const titleH3 = document.createElement('h4');
+  titleH3.textContent = post.title;
+  contentDiv.appendChild(titleH3);
+
+  const previewP = document.createElement('p');
+  previewP.textContent = `${plainText.substring(0, 150)}...`;
+  contentDiv.appendChild(previewP);
+
+  const authorDiv = document.createElement('div');
+  authorDiv.style.marginTop = 'auto';
+  authorDiv.style.paddingTop = '1rem';
+  authorDiv.style.display = 'flex';
+  authorDiv.style.justifyContent = 'space-between';
+  authorDiv.style.alignItems = 'center';
+
+  const authorSpan = document.createElement('span');
+  authorSpan.textContent = `— ${post.author || opts.defaultAuthor}`;
+  authorSpan.style.fontSize = '0.85rem';
+  authorSpan.style.opacity = '0.8';
+  authorDiv.appendChild(authorSpan);
+
+  const readSpan = document.createElement('span');
+  readSpan.className = 'card-link';
+  readSpan.innerHTML = 'Read <span aria-hidden="true">→</span>';
+  authorDiv.appendChild(readSpan);
+
+  contentDiv.appendChild(authorDiv);
+  card.appendChild(contentDiv);
+  container.appendChild(card);
+};
+
+/**
+ * Sorts posts newest-first and renders them as cards into a grid container.
+ * @param {HTMLElement} container - The grid element
+ * @param {Array} posts - The posts to render
+ * @param {object} opts - { urlPrefix, imageAlt, defaultAuthor }
+ * @returns {Array} - The posts, sorted newest-first
+ */
+const renderPostGrid = (container, posts, opts) => {
+  const sortedPosts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  if (container) {
+    container.innerHTML = '';
+    sortedPosts.forEach((post) => appendPostCard(container, post, opts));
+  }
+  return sortedPosts;
+};
+
+/**
  * Renders the blog posts grid container.
  * @param {HTMLElement} container - The blog grid element
  * @param {object} data - The validated blog database
  * @returns {void}
  */
 const renderBlogGrid = (container, data) => {
-  if (!container) return;
-  container.innerHTML = '';
-  const sortedPosts = data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-  sortedPosts.forEach((post) => {
-    const slug = post.slug || generateSlug(post.title);
-    const postUrl = `/blog/${slug}`;
-    const dateObj = new Date(post.date);
-    const dateStr = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-    let imgSrc = post.thumbnail || '';
-    if (imgSrc.startsWith('/')) {
-      imgSrc = imgSrc.substring(1);
-    }
-    const plainText = getMarkdownText(post.body || '');
-
-    const card = document.createElement('a');
-    card.className = 'card blog-card fade-up';
-    card.href = postUrl;
-    card.style.textDecoration = 'none';
-    card.style.color = 'inherit';
-
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'card-img-wrap';
-
-    const thumbImg = document.createElement('img');
-    thumbImg.src = imgSrc;
-    thumbImg.alt = post.title || 'Blog thumbnail';
-    thumbImg.className = 'card-img';
-    thumbImg.loading = 'lazy';
-    thumbImg.width = 360;
-    thumbImg.height = 200;
-    imgWrap.appendChild(thumbImg);
-    card.appendChild(imgWrap);
-
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'card-body';
-
-    const dateSpan = document.createElement('span');
-    dateSpan.className = 'eyebrow';
-    dateSpan.style.marginBottom = '0.5rem';
-    dateSpan.textContent = dateStr;
-    contentDiv.appendChild(dateSpan);
-
-    const titleH3 = document.createElement('h4');
-    titleH3.textContent = post.title;
-    contentDiv.appendChild(titleH3);
-
-    const previewP = document.createElement('p');
-    previewP.textContent = `${plainText.substring(0, 150)}...`;
-    contentDiv.appendChild(previewP);
-
-    const authorDiv = document.createElement('div');
-    authorDiv.style.marginTop = 'auto';
-    authorDiv.style.paddingTop = '1rem';
-    authorDiv.style.display = 'flex';
-    authorDiv.style.justifyContent = 'space-between';
-    authorDiv.style.alignItems = 'center';
-
-    const authorSpan = document.createElement('span');
-    authorSpan.textContent = `— ${post.author || 'Anonymous'}`;
-    authorSpan.style.fontSize = '0.85rem';
-    authorSpan.style.opacity = '0.8';
-    authorDiv.appendChild(authorSpan);
-
-    const readSpan = document.createElement('span');
-    readSpan.className = 'card-link';
-    readSpan.innerHTML = 'Read <span aria-hidden="true">→</span>';
-    authorDiv.appendChild(readSpan);
-
-    contentDiv.appendChild(authorDiv);
-    card.appendChild(contentDiv);
-    container.appendChild(card);
+  renderPostGrid(container, data.posts, {
+    urlPrefix: '/blog',
+    imageAlt: 'Blog thumbnail',
+    defaultAuthor: 'Anonymous'
   });
 };
 
@@ -219,10 +239,9 @@ const renderMembersGrid = (container, data, teamFilter) => {
 
   members.forEach((member, i) => {
     const delayClass = i % 3 === 1 ? 'delay-1' : (i % 3 === 2 ? 'delay-2' : '');
-    let imgSrc = member.image || '';
-    if (imgSrc.startsWith('/')) {
-      imgSrc = imgSrc.substring(1);
-    }
+    /* Members without a photo would otherwise get src="", which paints
+       a broken-image icon. */
+    const imgSrc = member.image ? assetPath(member.image) : 'assets/members/member-placeholder.jpg';
 
     const card = document.createElement('div');
     card.className = `member-card fade-up ${delayClass}`.trim();
@@ -256,87 +275,15 @@ const renderMembersGrid = (container, data, teamFilter) => {
  * @returns {void}
  */
 const renderMeraki = (gridContainer, previewContainer, data) => {
-  const sortedPosts = data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-  if (gridContainer) {
-    gridContainer.innerHTML = '';
-    sortedPosts.forEach((post) => {
-      const slug = post.slug || generateSlug(post.title);
-      const postUrl = `/meraki/${slug}`;
-      const dateObj = new Date(post.date);
-      const dateStr = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-      let imgSrc = post.thumbnail || '';
-      if (imgSrc.startsWith('/')) {
-        imgSrc = imgSrc.substring(1);
-      }
-      const plainText = getMarkdownText(post.body || '');
-
-      const card = document.createElement('a');
-      card.className = 'card blog-card fade-up';
-      card.href = postUrl;
-      card.style.textDecoration = 'none';
-      card.style.color = 'inherit';
-
-      const imgWrap = document.createElement('div');
-      imgWrap.className = 'card-img-wrap';
-
-      const thumbImg = document.createElement('img');
-      thumbImg.src = imgSrc;
-      thumbImg.alt = post.title || 'Issue cover';
-      thumbImg.className = 'card-img';
-      thumbImg.loading = 'lazy';
-      thumbImg.width = 360;
-      thumbImg.height = 200;
-      imgWrap.appendChild(thumbImg);
-      card.appendChild(imgWrap);
-
-      const contentDiv = document.createElement('div');
-      contentDiv.className = 'card-body';
-
-      const dateSpan = document.createElement('span');
-      dateSpan.className = 'eyebrow';
-      dateSpan.style.marginBottom = '0.5rem';
-      dateSpan.textContent = dateStr;
-      contentDiv.appendChild(dateSpan);
-
-      const titleH3 = document.createElement('h4');
-      titleH3.textContent = post.title;
-      contentDiv.appendChild(titleH3);
-
-      const previewP = document.createElement('p');
-      previewP.textContent = `${plainText.substring(0, 150)}...`;
-      contentDiv.appendChild(previewP);
-
-      const authorDiv = document.createElement('div');
-      authorDiv.style.marginTop = 'auto';
-      authorDiv.style.paddingTop = '1rem';
-      authorDiv.style.display = 'flex';
-      authorDiv.style.justifyContent = 'space-between';
-      authorDiv.style.alignItems = 'center';
-
-      const authorSpan = document.createElement('span');
-      authorSpan.textContent = `— ${post.author || 'Editorial Board'}`;
-      authorSpan.style.fontSize = '0.85rem';
-      authorSpan.style.opacity = '0.8';
-      authorDiv.appendChild(authorSpan);
-
-      const readSpan = document.createElement('span');
-      readSpan.className = 'card-link';
-      readSpan.innerHTML = 'Read <span aria-hidden="true">→</span>';
-      authorDiv.appendChild(readSpan);
-
-      contentDiv.appendChild(authorDiv);
-      card.appendChild(contentDiv);
-      gridContainer.appendChild(card);
-    });
-  }
+  const sortedPosts = renderPostGrid(gridContainer, data.posts, {
+    urlPrefix: '/meraki',
+    imageAlt: 'Issue cover',
+    defaultAuthor: 'Editorial Board'
+  });
 
   if (previewContainer && sortedPosts.length > 0) {
     const latest = sortedPosts[0];
-    let imgSrc = latest.thumbnail || '';
-    if (imgSrc.startsWith('/')) {
-      imgSrc = imgSrc.substring(1);
-    }
+    const imgSrc = assetPath(latest.thumbnail);
     const plainText = getMarkdownText(latest.body || '');
 
     previewContainer.innerHTML = '';
@@ -396,132 +343,13 @@ const renderMeraki = (gridContainer, previewContainer, data) => {
  * @returns {void}
  */
 const renderCrescentLine = (container, data) => {
-  if (!container) return;
-  container.innerHTML = '';
-  const sortedPosts = data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-  sortedPosts.forEach((post) => {
-    const slug = post.slug || generateSlug(post.title);
-    const postUrl = `/crescent-line/${slug}`;
-    const dateObj = new Date(post.date);
-    const dateStr = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-    let imgSrc = post.thumbnail || '';
-    if (imgSrc.startsWith('/')) {
-      imgSrc = imgSrc.substring(1);
-    }
-    const plainText = getMarkdownText(post.body || '');
-
-    const card = document.createElement('a');
-    card.className = 'card blog-card fade-up';
-    card.href = postUrl;
-    card.style.textDecoration = 'none';
-    card.style.color = 'inherit';
-
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'card-img-wrap';
-
-    const thumbImg = document.createElement('img');
-    thumbImg.src = imgSrc;
-    thumbImg.alt = post.title || 'Newsletter cover';
-    thumbImg.className = 'card-img';
-    thumbImg.loading = 'lazy';
-    thumbImg.width = 360;
-    thumbImg.height = 200;
-    imgWrap.appendChild(thumbImg);
-    card.appendChild(imgWrap);
-
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'card-body';
-
-    const dateSpan = document.createElement('span');
-    dateSpan.className = 'eyebrow';
-    dateSpan.style.marginBottom = '0.5rem';
-    dateSpan.textContent = dateStr;
-    contentDiv.appendChild(dateSpan);
-
-    const titleH3 = document.createElement('h4');
-    titleH3.textContent = post.title;
-    contentDiv.appendChild(titleH3);
-
-    const previewP = document.createElement('p');
-    previewP.textContent = `${plainText.substring(0, 150)}...`;
-    contentDiv.appendChild(previewP);
-
-    const authorDiv = document.createElement('div');
-    authorDiv.style.marginTop = 'auto';
-    authorDiv.style.paddingTop = '1rem';
-    authorDiv.style.display = 'flex';
-    authorDiv.style.justifyContent = 'space-between';
-    authorDiv.style.alignItems = 'center';
-
-    const authorSpan = document.createElement('span');
-    authorSpan.textContent = `— ${post.author || 'Dean'}`;
-    authorSpan.style.fontSize = '0.85rem';
-    authorSpan.style.opacity = '0.8';
-    authorDiv.appendChild(authorSpan);
-
-    const readSpan = document.createElement('span');
-    readSpan.className = 'card-link';
-    readSpan.innerHTML = 'Read <span aria-hidden="true">→</span>';
-    authorDiv.appendChild(readSpan);
-
-    contentDiv.appendChild(authorDiv);
-    card.appendChild(contentDiv);
-    container.appendChild(card);
+  renderPostGrid(container, data.posts, {
+    urlPrefix: '/crescent-line',
+    imageAlt: 'Newsletter cover',
+    defaultAuthor: 'Dean'
   });
 };
 
-/**
- * Renders the latest Obverse article into the homepage feature section.
- * Updates the title, blockquote, and description dynamically from CMS data.
- * @param {HTMLElement} container - The .obverse-content element
- * @param {object} data - The Obverse articles data
- * @returns {void}
- */
-const renderObverse = (container, data) => {
-  if (!container) return;
-  const sortedPosts = data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-  if (sortedPosts.length === 0) return;
-
-  const latest = sortedPosts[0];
-  const slug = latest.slug || generateSlug(latest.title);
-  const postUrl = `/obverse/${slug}`;
-  const plainText = getMarkdownText(latest.body || '');
-  const excerpt = plainText.substring(0, 200);
-
-  // Update the h3 title
-  const titleEl = container.querySelector('h3');
-  if (titleEl) titleEl.textContent = latest.title || 'Untitled';
-
-  // Update the blockquote with a snippet
-  const quoteEl = container.querySelector('blockquote');
-  if (quoteEl) quoteEl.textContent = `"${excerpt}…"`;
-
-  // Update the description paragraph
-  const descP = container.querySelector('p');
-  if (descP) descP.textContent = `By ${latest.author || 'CLS'} — Read this and more in Obverse, our flagship literary magazine.`;
-
-  // Update the Read More link to point to the actual article
-  const readBtn = container.parentElement ? container.parentElement.querySelector('#obverse-read-btn, .btn-gold') : null;
-  if (readBtn) readBtn.href = postUrl;
-
-  // Update the cover image if the article has a thumbnail
-  if (latest.thumbnail) {
-    const imgContainer = container.parentElement ? container.parentElement.querySelector('.obverse-img img') : null;
-    if (imgContainer) {
-      let imgSrc = latest.thumbnail;
-      if (imgSrc.startsWith('/')) imgSrc = imgSrc.substring(1);
-      imgContainer.src = imgSrc;
-    }
-  }
-};
-
-/**
- * Renders the Obverse archive grid (same card pattern as Blog/Meraki/Crescent Line).
- * @param {HTMLElement} container - The Obverse grid element
- * @param {object} data - The Obverse articles data
- * @returns {void}
- */
 const renderObverseGrid = (container, data) => {
   if (!container) return;
   container.innerHTML = '';
@@ -793,12 +621,101 @@ const renderQrPanel = (canvas, captionEl, linkEl, data) => {
  */
 const renderAboutImages = (heroBg, outingImg, data) => {
   if (data.heroBanner && data.heroBanner.trim() !== '' && heroBg) {
-    let src = data.heroBanner.startsWith('/') ? data.heroBanner.substring(1) : data.heroBanner;
-    heroBg.style.backgroundImage = `url('${src}')`;
+    heroBg.style.backgroundImage = `url('${assetPath(data.heroBanner)}')`;
   }
   if (data.outingPhoto && data.outingPhoto.trim() !== '' && outingImg) {
-    let src = data.outingPhoto.startsWith('/') ? data.outingPhoto.substring(1) : data.outingPhoto;
-    outingImg.src = src;
+    outingImg.src = assetPath(data.outingPhoto);
+  }
+};
+
+/* Defaults live here rather than in the markup, so the cards still
+   paint if data/wing-images.json is missing, malformed or slow. */
+const WING_IMAGE_FALLBACKS = {
+  houseOfDebaters: '/assets/clubs/house-of-debators.jpg',
+  improv: '/assets/clubs/improv.jpg',
+  writersGuild: '/assets/clubs/writers-guild.jpg',
+  quizzersCircuit: '/assets/clubs/quizzers-circuit.jpg',
+  editorialBoard: '/assets/about/cls-outing-2019.jpg'
+};
+
+/**
+ * Points each [data-wing-image] card at its configured image, falling
+ * back per-card when the CMS value is blank or absent.
+ * @param {object} data - Parsed wing-images.json, or the fallback map.
+ * @returns {void}
+ */
+const renderWingImages = (data) => {
+  document.querySelectorAll('[data-wing-image]').forEach((el) => {
+    const key = el.dataset.wingImage;
+    const configured = data && typeof data[key] === 'string' ? data[key].trim() : '';
+    const src = configured !== '' ? configured : WING_IMAGE_FALLBACKS[key];
+    if (src) el.style.backgroundImage = `url('${assetPath(src)}')`;
+  });
+};
+
+/* Defaults live here rather than in the markup, so the collage still
+   paints if data/moments.json is missing, malformed or slow. Order
+   1-8 is today's DOM order, so the seeded values move nothing. */
+const MOMENT_FALLBACKS = {
+  debaters: { image: '/assets/clubs/house-of-debators.jpg', caption: 'House of debaters in session', order: 1 },
+  improv: { image: '/assets/clubs/improv.jpg', caption: 'Improvisational Theatre performance', order: 2 },
+  writersGuild: { image: '/assets/clubs/writers-guild.jpg', caption: "Writer's Guild manuscript", order: 3 },
+  quizzers: { image: '/assets/clubs/quizzers-circuit.jpg', caption: 'Quizzers Circuit buzzer round', order: 4 },
+  literaryPoster: { image: '/assets/blog/blog-thumb-1.jpg', caption: 'CLS blog feature', order: 5 },
+  literaryGraphic: { image: '/assets/blog/blog-thumb-2.jpg', caption: 'CLS blog feature', order: 6 },
+  manuscriptDesk: { image: '/assets/blog/blog-thumb-3.jpg', caption: 'CLS blog feature', order: 7 },
+  community: { image: '/assets/about/cls-outing-2019.jpg', caption: 'CLS society outing', order: 8 }
+};
+
+/**
+ * Reads one Moment slot, falling back per-field when the CMS value is blank.
+ * @param {object} data - Parsed moments.json, or the fallback map.
+ * @param {string} key - Slot key from data-moment.
+ * @returns {{image: string, caption: string, order: number}}
+ */
+const momentSlot = (data, key) => {
+  const slot = (data && data[key]) || {};
+  const fallback = MOMENT_FALLBACKS[key] || {};
+  const image = typeof slot.image === 'string' ? slot.image.trim() : '';
+  const caption = typeof slot.caption === 'string' ? slot.caption.trim() : '';
+  const order = typeof slot.order === 'number' ? slot.order : fallback.order;
+  return {
+    image: image !== '' ? image : fallback.image,
+    caption: caption !== '' ? caption : fallback.caption,
+    order: typeof order === 'number' ? order : 0
+  };
+};
+
+/**
+ * Points each [data-moment] tile at its configured image and caption.
+ * Sets dataset.bg *and* the painted background, because image-trail.js
+ * only paints a tile whose backgroundImage is still unset.
+ * @param {object} data - Parsed moments.json, or the fallback map.
+ * @returns {void}
+ */
+const renderMoments = (data) => {
+  const container = document.getElementById('image-trail');
+  if (!container) return;
+  const tiles = [...container.querySelectorAll('[data-moment]')];
+
+  tiles.forEach((tile) => {
+    const { image, caption } = momentSlot(data, tile.dataset.moment);
+    const inner = tile.querySelector('.content__img-inner');
+    if (image && inner) {
+      const src = assetPath(image);
+      inner.dataset.bg = src;
+      inner.style.backgroundImage = `url('${src}')`;
+    }
+    if (caption) tile.setAttribute('aria-label', caption);
+  });
+
+  /* Only touch the DOM when the order actually differs, so the default
+     configuration leaves the collage exactly as authored. */
+  const ordered = tiles.slice().sort(
+    (a, b) => momentSlot(data, a.dataset.moment).order - momentSlot(data, b.dataset.moment).order
+  );
+  if (ordered.some((el, i) => el !== tiles[i])) {
+    ordered.forEach((el) => container.appendChild(el));
   }
 };
 
@@ -928,21 +845,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Obverse Task — homepage feature section
-  const obverseContent = document.querySelector('.obverse-content');
-  if (obverseContent) {
-    fetchTasks.push({
-      url: `data/obverse.json?t=${Date.now()}`,
-      container: null,
-      validate: (data) => data && Array.isArray(data.posts),
-      render: (data) => {
-        if (data.posts.length > 0) {
-          renderObverse(obverseContent, data);
-        }
-      }
-    });
-  }
-
   // Obverse Archive Grid Task
   if (obverseGridContainer) {
     fetchTasks.push({
@@ -990,30 +892,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Wing Card Image Sync — pull first slide from each wing's carousel JSON
-  // to keep homepage card thumbnails in sync with the CMS-managed hero images.
-  const wingCards = document.querySelectorAll('[data-wing-carousel]');
-  wingCards.forEach((card) => {
-    const carouselFile = card.getAttribute('data-wing-carousel');
-    if (!carouselFile) return;
+  // Moments Task — paint the built-in defaults first so js/image-trail.js
+  // (which runs later and skips tiles that already have a background) always
+  // finds an image, then let the CMS values override them.
+  const momentTiles = document.querySelectorAll('[data-moment]');
+  if (momentTiles.length) {
+    renderMoments(MOMENT_FALLBACKS);
     fetchTasks.push({
-      url: `${carouselFile}?t=${Date.now()}`,
+      url: `data/moments.json?t=${Date.now()}`,
       container: null,
-      validate: (data) => data && Array.isArray(data.slides) && data.slides.length > 0,
-      render: (data) => {
-        let imgSrc = data.slides[0].image;
-        if (!imgSrc) return;
-        if (imgSrc.startsWith('/')) imgSrc = imgSrc.substring(1);
-        const imgEl = card.querySelector('.card-img');
-        if (imgEl) {
-          imgEl.src = imgSrc;
-          if (data.slides[0].altText) {
-            imgEl.alt = data.slides[0].altText;
-          }
-        }
-      }
+      validate: (data) => data && typeof data === 'object',
+      render: (data) => renderMoments(data)
     });
-  });
+  }
+
+  // Homepage Wing Cards Task — paint the built-in defaults first so the
+  // cards never flash empty, then let the CMS values override them.
+  const wingImageCards = document.querySelectorAll('[data-wing-image]');
+  if (wingImageCards.length) {
+    renderWingImages(WING_IMAGE_FALLBACKS);
+    fetchTasks.push({
+      url: `data/wing-images.json?t=${Date.now()}`,
+      container: null,
+      validate: (data) => data && typeof data === 'object',
+      render: (data) => renderWingImages(data)
+    });
+  }
 
   // Recent Updates Task — merges Blog/Meraki/Obverse/Crescent Line, so it fetches
   // its own copies of those four files rather than threading data through the
@@ -1054,7 +958,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
       task.render(data);
     } catch (err) {
-      if (task.container) {
+      if (task.onError) {
+        task.onError();
+      } else if (task.container) {
         showError(task.container);
       }
     }
