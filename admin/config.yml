@@ -139,7 +139,6 @@ collections:
               - {label: "Slug", name: "slug", widget: "string", pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers, hyphens only'], hint: "URL-safe identifier. Once set, do not change.", required: true}
               - {label: "Publish Date", name: "date", widget: "datetime", required: true}
               - {label: "Author", name: "author", widget: "string", required: true}
-              - {label: "Category", name: "category", widget: "select", required: true, options: ["Story Writing", "Poetry", "Essays & Opinion", "Reportage & Review"], hint: "Determines which section of the site lists this post. Story Writing posts appear on the Writer's Guild page."}
               - {label: "Cover Image", name: "thumbnail", widget: "image", required: false, description: "Optimize cover to max 800px width, JPG/WebP format."}
               - {label: "Body", name: "body", widget: "markdown", required: true}
 

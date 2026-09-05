@@ -22,6 +22,22 @@ const RA_SOURCES = [
   { key: 'obverse',       file: 'data/obverse.json',       label: 'Obverse Magazine', prefix: '/obverse' }
 ];
 
+/* Opt-in sources, addressable by key via data-ra-sources but never
+   part of the default set — Recent Activity defaults to RA_SOURCES,
+   so adding here cannot change that page. `items` names the array
+   key, `match` narrows the collection, and a source with no `prefix`
+   has no article page, so its tiles are rendered as plain elements
+   rather than links. */
+const RA_EXTRA_SOURCES = [
+  {
+    key: 'story-writing',
+    file: 'data/wing-entries.json',
+    label: 'Story Writing',
+    items: 'entries',
+    match: (e) => e.wing === 'writers-guild' && e.entryType === 'story-poem'
+  }
+];
+
 const RA_MAX_ITEMS = 8;
 
 /**
@@ -34,10 +50,11 @@ const RA_MAX_ITEMS = 8;
 const raConfig = (row) => {
   const d = row.dataset;
   const keys = d.raSources ? d.raSources.split(',').map((s) => s.trim()) : null;
+  const known = RA_SOURCES.concat(RA_EXTRA_SOURCES);
   return {
-    sources: keys ? RA_SOURCES.filter((s) => keys.includes(s.key)) : RA_SOURCES,
-    category: d.raCategory || '',
-    label: d.raLabel || '',
+    sources: keys
+      ? keys.map((k) => known.find((s) => s.key === k)).filter(Boolean)
+      : RA_SOURCES,
     max: d.raMax ? Number(d.raMax) : RA_MAX_ITEMS,
     statusId: d.raStatus || 'recent-activity-status',
     emptyText: d.raEmpty || 'No activity has been published yet. New posts will appear here automatically.',
@@ -97,7 +114,10 @@ const raLoadActivity = async (cfg) => {
     cfg.sources.map((source) =>
       fetch(`${source.file}?t=${Date.now()}`)
         .then((res) => (res.ok ? res.json() : Promise.reject(new Error(res.status))))
-        .then((data) => ({ source, posts: Array.isArray(data.posts) ? data.posts : [] }))
+        .then((data) => {
+          const list = data[source.items || 'posts'];
+          return { source, posts: Array.isArray(list) ? list : [] };
+        })
     )
   );
 
@@ -107,18 +127,16 @@ const raLoadActivity = async (cfg) => {
     const { source, posts } = result.value;
     posts.forEach((post) => {
       if (!post || !post.title) return;
-      /* A category filter narrows one collection to a single
-         section, e.g. Obverse -> Story Writing. */
-      if (cfg.category && post.category !== cfg.category) return;
+      /* Some sources hold more than one section's worth of entries. */
+      if (source.match && !source.match(post)) return;
       items.push({
         title: post.title,
         date: post.date || '',
         author: post.author || '',
         thumbnail: post.thumbnail || '',
         slug: post.slug || raGenerateSlug(post.title),
-        category: post.category || '',
-        label: cfg.label || source.label,
-        prefix: source.prefix
+        label: source.label,
+        prefix: source.prefix || ''
       });
     });
   });
@@ -135,10 +153,17 @@ const raLoadActivity = async (cfg) => {
  * @returns {HTMLAnchorElement}
  */
 const raBuildTile = (item, index) => {
-  const tile = document.createElement('a');
+  /* Sources without a prefix have no article page to open, so their
+     tiles are plain elements. They stay keyboard-focusable so the
+     expand interaction behaves the same either way. */
+  const tile = document.createElement(item.prefix ? 'a' : 'div');
   tile.className = 'ra-item';
-  /* Same clean URL cms-loader builds and vercel.json rewrites. */
-  tile.href = `${item.prefix}/${item.slug}`;
+  if (item.prefix) {
+    /* Same clean URL cms-loader builds and vercel.json rewrites. */
+    tile.href = `${item.prefix}/${item.slug}`;
+  } else {
+    tile.tabIndex = 0;
+  }
   tile.dataset.index = String(index);
 
   const media = document.createElement('div');
