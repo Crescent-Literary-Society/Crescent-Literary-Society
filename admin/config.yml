@@ -223,6 +223,67 @@ collections:
           - {label: "Quizzers Circuit", name: "quizzersCircuit", widget: "image", required: false, description: "Homepage gallery card. Optimize to max 800px wide, JPG/WebP."}
           - {label: "Editorial Board", name: "editorialBoard", widget: "image", required: false, description: "Homepage gallery card. Optimize to max 800px wide, JPG/WebP."}
 
+      - label: "Moments"
+        name: "moments"
+        file: "data/moments.json"
+        fields:
+          - label: "1 — House of Debaters"
+            name: "debaters"
+            widget: "object"
+            fields:
+              - {label: "Image", name: "image", widget: "image", required: false, description: "Homepage Moments collage. Optimize to max 800px wide, JPG/WebP."}
+              - {label: "Title / Caption", name: "caption", widget: "string", required: false, hint: "Describes the image for screen readers. Leave blank to keep the default."}
+              - {label: "Order", name: "order", widget: "number", required: false, value_type: "int", default: 1}
+          - label: "2 — Improvisational Theatre"
+            name: "improv"
+            widget: "object"
+            fields:
+              - {label: "Image", name: "image", widget: "image", required: false, description: "Homepage Moments collage. Optimize to max 800px wide, JPG/WebP."}
+              - {label: "Title / Caption", name: "caption", widget: "string", required: false, hint: "Describes the image for screen readers. Leave blank to keep the default."}
+              - {label: "Order", name: "order", widget: "number", required: false, value_type: "int", default: 2}
+          - label: "3 — Writer's Guild"
+            name: "writersGuild"
+            widget: "object"
+            fields:
+              - {label: "Image", name: "image", widget: "image", required: false, description: "Homepage Moments collage. Optimize to max 800px wide, JPG/WebP."}
+              - {label: "Title / Caption", name: "caption", widget: "string", required: false, hint: "Describes the image for screen readers. Leave blank to keep the default."}
+              - {label: "Order", name: "order", widget: "number", required: false, value_type: "int", default: 3}
+          - label: "4 — Quizzers Circuit"
+            name: "quizzers"
+            widget: "object"
+            fields:
+              - {label: "Image", name: "image", widget: "image", required: false, description: "Homepage Moments collage. Optimize to max 800px wide, JPG/WebP."}
+              - {label: "Title / Caption", name: "caption", widget: "string", required: false, hint: "Describes the image for screen readers. Leave blank to keep the default."}
+              - {label: "Order", name: "order", widget: "number", required: false, value_type: "int", default: 4}
+          - label: "5 — Literary / Creative Event"
+            name: "literaryPoster"
+            widget: "object"
+            fields:
+              - {label: "Image", name: "image", widget: "image", required: false, description: "Homepage Moments collage. Optimize to max 800px wide, JPG/WebP."}
+              - {label: "Title / Caption", name: "caption", widget: "string", required: false, hint: "Describes the image for screen readers. Leave blank to keep the default."}
+              - {label: "Order", name: "order", widget: "number", required: false, value_type: "int", default: 5}
+          - label: "6 — Literary Feature"
+            name: "literaryGraphic"
+            widget: "object"
+            fields:
+              - {label: "Image", name: "image", widget: "image", required: false, description: "Homepage Moments collage. Optimize to max 800px wide, JPG/WebP."}
+              - {label: "Title / Caption", name: "caption", widget: "string", required: false, hint: "Describes the image for screen readers. Leave blank to keep the default."}
+              - {label: "Order", name: "order", widget: "number", required: false, value_type: "int", default: 6}
+          - label: "7 — Writing Desk"
+            name: "manuscriptDesk"
+            widget: "object"
+            fields:
+              - {label: "Image", name: "image", widget: "image", required: false, description: "Homepage Moments collage. Optimize to max 800px wide, JPG/WebP."}
+              - {label: "Title / Caption", name: "caption", widget: "string", required: false, hint: "Describes the image for screen readers. Leave blank to keep the default."}
+              - {label: "Order", name: "order", widget: "number", required: false, value_type: "int", default: 7}
+          - label: "8 — CLS Community / Event"
+            name: "community"
+            widget: "object"
+            fields:
+              - {label: "Image", name: "image", widget: "image", required: false, description: "Homepage Moments collage. Optimize to max 800px wide, JPG/WebP."}
+              - {label: "Title / Caption", name: "caption", widget: "string", required: false, hint: "Describes the image for screen readers. Leave blank to keep the default."}
+              - {label: "Order", name: "order", widget: "number", required: false, value_type: "int", default: 8}
+
       - label: "About Page Images"
         name: "about-images"
         file: "data/about-images.json"

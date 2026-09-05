@@ -704,6 +704,72 @@ const renderWingImages = (data) => {
   });
 };
 
+/* Defaults live here rather than in the markup, so the collage still
+   paints if data/moments.json is missing, malformed or slow. Order
+   1-8 is today's DOM order, so the seeded values move nothing. */
+const MOMENT_FALLBACKS = {
+  debaters: { image: '/assets/clubs/house-of-debators.jpg', caption: 'House of debaters in session', order: 1 },
+  improv: { image: '/assets/clubs/improv.jpg', caption: 'Improvisational Theatre performance', order: 2 },
+  writersGuild: { image: '/assets/clubs/writers-guild.jpg', caption: "Writer's Guild manuscript", order: 3 },
+  quizzers: { image: '/assets/clubs/quizzers-circuit.jpg', caption: 'Quizzers Circuit buzzer round', order: 4 },
+  literaryPoster: { image: '/assets/blog/blog-thumb-1.jpg', caption: 'CLS blog feature', order: 5 },
+  literaryGraphic: { image: '/assets/blog/blog-thumb-2.jpg', caption: 'CLS blog feature', order: 6 },
+  manuscriptDesk: { image: '/assets/blog/blog-thumb-3.jpg', caption: 'CLS blog feature', order: 7 },
+  community: { image: '/assets/about/cls-outing-2019.jpg', caption: 'CLS society outing', order: 8 }
+};
+
+/**
+ * Reads one Moment slot, falling back per-field when the CMS value is blank.
+ * @param {object} data - Parsed moments.json, or the fallback map.
+ * @param {string} key - Slot key from data-moment.
+ * @returns {{image: string, caption: string, order: number}}
+ */
+const momentSlot = (data, key) => {
+  const slot = (data && data[key]) || {};
+  const fallback = MOMENT_FALLBACKS[key] || {};
+  const image = typeof slot.image === 'string' ? slot.image.trim() : '';
+  const caption = typeof slot.caption === 'string' ? slot.caption.trim() : '';
+  const order = typeof slot.order === 'number' ? slot.order : fallback.order;
+  return {
+    image: image !== '' ? image : fallback.image,
+    caption: caption !== '' ? caption : fallback.caption,
+    order: typeof order === 'number' ? order : 0
+  };
+};
+
+/**
+ * Points each [data-moment] tile at its configured image and caption.
+ * Sets dataset.bg *and* the painted background, because image-trail.js
+ * only paints a tile whose backgroundImage is still unset.
+ * @param {object} data - Parsed moments.json, or the fallback map.
+ * @returns {void}
+ */
+const renderMoments = (data) => {
+  const container = document.getElementById('image-trail');
+  if (!container) return;
+  const tiles = [...container.querySelectorAll('[data-moment]')];
+
+  tiles.forEach((tile) => {
+    const { image, caption } = momentSlot(data, tile.dataset.moment);
+    const inner = tile.querySelector('.content__img-inner');
+    if (image && inner) {
+      const src = assetPath(image);
+      inner.dataset.bg = src;
+      inner.style.backgroundImage = `url('${src}')`;
+    }
+    if (caption) tile.setAttribute('aria-label', caption);
+  });
+
+  /* Only touch the DOM when the order actually differs, so the default
+     configuration leaves the collage exactly as authored. */
+  const ordered = tiles.slice().sort(
+    (a, b) => momentSlot(data, a.dataset.moment).order - momentSlot(data, b.dataset.moment).order
+  );
+  if (ordered.some((el, i) => el !== tiles[i])) {
+    ordered.forEach((el) => container.appendChild(el));
+  }
+};
+
 /* --- Main Controller --- */
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -889,6 +955,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       container: null,
       validate: (data) => data && (data.heroBanner !== undefined || data.outingPhoto !== undefined),
       render: (data) => renderAboutImages(aboutHeroBg, aboutOutingImg, data)
+    });
+  }
+
+  // Moments Task — paint the built-in defaults first so js/image-trail.js
+  // (which runs later and skips tiles that already have a background) always
+  // finds an image, then let the CMS values override them.
+  const momentTiles = document.querySelectorAll('[data-moment]');
+  if (momentTiles.length) {
+    renderMoments(MOMENT_FALLBACKS);
+    fetchTasks.push({
+      url: `data/moments.json?t=${Date.now()}`,
+      container: null,
+      validate: (data) => data && typeof data === 'object',
+      render: (data) => renderMoments(data)
     });
   }
 
