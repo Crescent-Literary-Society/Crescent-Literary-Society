@@ -213,6 +213,16 @@ collections:
             required: false
             default: "Scan to read the latest Crescent Line issue on the college site."
 
+      - label: "Homepage Wing Cards"
+        name: "wing-images"
+        file: "data/wing-images.json"
+        fields:
+          - {label: "House of Debaters", name: "houseOfDebaters", widget: "image", required: false, description: "Homepage gallery card. Optimize to max 800px wide, JPG/WebP."}
+          - {label: "Improvisational Theatre", name: "improv", widget: "image", required: false, description: "Homepage gallery card. Optimize to max 800px wide, JPG/WebP."}
+          - {label: "Writer's Guild", name: "writersGuild", widget: "image", required: false, description: "Homepage gallery card. Optimize to max 800px wide, JPG/WebP."}
+          - {label: "Quizzers Circuit", name: "quizzersCircuit", widget: "image", required: false, description: "Homepage gallery card. Optimize to max 800px wide, JPG/WebP."}
+          - {label: "Editorial Board", name: "editorialBoard", widget: "image", required: false, description: "Homepage gallery card. Optimize to max 800px wide, JPG/WebP."}
+
       - label: "About Page Images"
         name: "about-images"
         file: "data/about-images.json"

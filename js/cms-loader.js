@@ -239,7 +239,9 @@ const renderMembersGrid = (container, data, teamFilter) => {
 
   members.forEach((member, i) => {
     const delayClass = i % 3 === 1 ? 'delay-1' : (i % 3 === 2 ? 'delay-2' : '');
-    const imgSrc = assetPath(member.image);
+    /* Members without a photo would otherwise get src="", which paints
+       a broken-image icon. */
+    const imgSrc = member.image ? assetPath(member.image) : 'assets/logo/logo.jpg';
 
     const card = document.createElement('div');
     card.className = `member-card fade-up ${delayClass}`.trim();
@@ -677,6 +679,31 @@ const renderAboutImages = (heroBg, outingImg, data) => {
   }
 };
 
+/* Defaults live here rather than in the markup, so the cards still
+   paint if data/wing-images.json is missing, malformed or slow. */
+const WING_IMAGE_FALLBACKS = {
+  houseOfDebaters: '/assets/clubs/house-of-debators.jpg',
+  improv: '/assets/clubs/improv.jpg',
+  writersGuild: '/assets/clubs/writers-guild.jpg',
+  quizzersCircuit: '/assets/clubs/quizzers-circuit.jpg',
+  editorialBoard: '/assets/about/cls-outing-2019.jpg'
+};
+
+/**
+ * Points each [data-wing-image] card at its configured image, falling
+ * back per-card when the CMS value is blank or absent.
+ * @param {object} data - Parsed wing-images.json, or the fallback map.
+ * @returns {void}
+ */
+const renderWingImages = (data) => {
+  document.querySelectorAll('[data-wing-image]').forEach((el) => {
+    const key = el.dataset.wingImage;
+    const configured = data && typeof data[key] === 'string' ? data[key].trim() : '';
+    const src = configured !== '' ? configured : WING_IMAGE_FALLBACKS[key];
+    if (src) el.style.backgroundImage = `url('${assetPath(src)}')`;
+  });
+};
+
 /* --- Main Controller --- */
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -862,6 +889,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       container: null,
       validate: (data) => data && (data.heroBanner !== undefined || data.outingPhoto !== undefined),
       render: (data) => renderAboutImages(aboutHeroBg, aboutOutingImg, data)
+    });
+  }
+
+  // Homepage Wing Cards Task — paint the built-in defaults first so the
+  // cards never flash empty, then let the CMS values override them.
+  const wingImageCards = document.querySelectorAll('[data-wing-image]');
+  if (wingImageCards.length) {
+    renderWingImages(WING_IMAGE_FALLBACKS);
+    fetchTasks.push({
+      url: `data/wing-images.json?t=${Date.now()}`,
+      container: null,
+      validate: (data) => data && typeof data === 'object',
+      render: (data) => renderWingImages(data)
     });
   }
 
