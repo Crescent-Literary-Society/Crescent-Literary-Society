@@ -1,3 +1,11 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "title": "check ",
+      "slug": "check",
+      "date": "2026-09-05T12:36:00.000+05:30",
+      "author": "rayhaan ",
+      "body": "check"
+    }
+  ]
 }
