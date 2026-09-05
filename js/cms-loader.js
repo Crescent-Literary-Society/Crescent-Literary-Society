@@ -241,7 +241,7 @@ const renderMembersGrid = (container, data, teamFilter) => {
     const delayClass = i % 3 === 1 ? 'delay-1' : (i % 3 === 2 ? 'delay-2' : '');
     /* Members without a photo would otherwise get src="", which paints
        a broken-image icon. */
-    const imgSrc = member.image ? assetPath(member.image) : 'assets/logo/logo.jpg';
+    const imgSrc = member.image ? assetPath(member.image) : 'assets/members/member-placeholder.jpg';
 
     const card = document.createElement('div');
     card.className = `member-card fade-up ${delayClass}`.trim();
@@ -350,57 +350,6 @@ const renderCrescentLine = (container, data) => {
   });
 };
 
-/**
- * Renders the latest Obverse article into the homepage feature section.
- * Updates the title, blockquote, and description dynamically from CMS data.
- * @param {HTMLElement} container - The .obverse-content element
- * @param {object} data - The Obverse articles data
- * @returns {void}
- */
-const renderObverse = (container, data) => {
-  if (!container) return;
-  const sortedPosts = data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-  if (sortedPosts.length === 0) return;
-
-  const latest = sortedPosts[0];
-  const slug = latest.slug || generateSlug(latest.title);
-  const postUrl = `/obverse/${slug}`;
-  const plainText = getMarkdownText(latest.body || '');
-  const excerpt = plainText.substring(0, 200);
-
-  // Update the h3 title
-  const titleEl = container.querySelector('h3');
-  if (titleEl) titleEl.textContent = latest.title || 'Untitled';
-
-  // Update the blockquote with a snippet
-  const quoteEl = container.querySelector('blockquote');
-  if (quoteEl) quoteEl.textContent = `"${excerpt}…"`;
-
-  // Update the description paragraph
-  const descP = container.querySelector('p');
-  if (descP) descP.textContent = `By ${latest.author || 'CLS'} — Read this and more in Obverse, our flagship literary magazine.`;
-
-  // Update the Read More link to point to the actual article
-  const readBtn = container.parentElement ? container.parentElement.querySelector('#obverse-read-btn, .btn-gold') : null;
-  if (readBtn) readBtn.href = postUrl;
-
-  // Update the cover image if the article has a thumbnail
-  if (latest.thumbnail) {
-    const imgContainer = container.parentElement ? container.parentElement.querySelector('.obverse-img img') : null;
-    if (imgContainer) {
-      let imgSrc = latest.thumbnail;
-      if (imgSrc.startsWith('/')) imgSrc = imgSrc.substring(1);
-      imgContainer.src = imgSrc;
-    }
-  }
-};
-
-/**
- * Renders the Obverse archive grid (same card pattern as Blog/Meraki/Crescent Line).
- * @param {HTMLElement} container - The Obverse grid element
- * @param {object} data - The Obverse articles data
- * @returns {void}
- */
 const renderObverseGrid = (container, data) => {
   if (!container) return;
   container.innerHTML = '';
@@ -896,21 +845,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Obverse Task — homepage feature section
-  const obverseContent = document.querySelector('.obverse-content');
-  if (obverseContent) {
-    fetchTasks.push({
-      url: `data/obverse.json?t=${Date.now()}`,
-      container: null,
-      validate: (data) => data && Array.isArray(data.posts),
-      render: (data) => {
-        if (data.posts.length > 0) {
-          renderObverse(obverseContent, data);
-        }
-      }
-    });
-  }
-
   // Obverse Archive Grid Task
   if (obverseGridContainer) {
     fetchTasks.push({
@@ -984,31 +918,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       render: (data) => renderWingImages(data)
     });
   }
-
-  // Wing Card Image Sync — pull first slide from each wing's carousel JSON
-  // to keep homepage card thumbnails in sync with the CMS-managed hero images.
-  const wingCards = document.querySelectorAll('[data-wing-carousel]');
-  wingCards.forEach((card) => {
-    const carouselFile = card.getAttribute('data-wing-carousel');
-    if (!carouselFile) return;
-    fetchTasks.push({
-      url: `${carouselFile}?t=${Date.now()}`,
-      container: null,
-      validate: (data) => data && Array.isArray(data.slides) && data.slides.length > 0,
-      render: (data) => {
-        let imgSrc = data.slides[0].image;
-        if (!imgSrc) return;
-        if (imgSrc.startsWith('/')) imgSrc = imgSrc.substring(1);
-        const imgEl = card.querySelector('.card-img');
-        if (imgEl) {
-          imgEl.src = imgSrc;
-          if (data.slides[0].altText) {
-            imgEl.alt = data.slides[0].altText;
-          }
-        }
-      }
-    });
-  });
 
   // Recent Updates Task — merges Blog/Meraki/Obverse/Crescent Line, so it fetches
   // its own copies of those four files rather than threading data through the
