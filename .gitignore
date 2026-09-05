@@ -7,3 +7,11 @@ node_modules/
 Thumbs.db
 *.log
 scripts/
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
+
+# Local screenshots and agent tooling
+cs-*.png
+.claude/
+.agents/
+skills-lock.json

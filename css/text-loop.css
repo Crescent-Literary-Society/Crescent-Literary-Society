@@ -1,0 +1,84 @@
+/* =========================================================
+   TEXT LOOP — Crescent Literary Society
+   Repeating gold "ABOUT US ✦" text flowing along an unpainted
+   wave path. Markup is built by js/text-loop.js.
+   ========================================================= */
+
+.about-loop {
+  --loop-gold: #D4AF37;
+
+  /* Tighter than the global `section` rule — this is a band, not a section. */
+  padding: 2.5rem 0;
+  overflow: hidden;
+}
+
+/* Offscreen heading — the site has no global .visually-hidden utility. */
+.about-loop-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.about-loop-link {
+  display: block;
+  text-decoration: none;
+}
+
+.about-loop-link:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 4px;
+}
+
+/* --- Loop shell (ported from the reference TextLoop.css) --- */
+.text-loop {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.text-loop-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Never painted — it exists so <textPath> has a path to follow and
+   the script has something to measure with getTotalLength(). */
+.text-loop-path {
+  fill: none;
+  stroke: none;
+}
+
+.text-loop-text {
+  fill: var(--loop-gold);
+  font-family: var(--font-display);
+  transition: filter var(--transition);
+  font-size: 34px;
+  font-weight: 650;
+  letter-spacing: 5.5px;
+  user-select: none;
+}
+
+.about-loop-link:hover .text-loop-text {
+  filter: brightness(1.08);
+}
+
+/* Sized by the same type rules, but never painted — it only exists
+   so the script can measure one repetition with getComputedTextLength(). */
+.text-loop-measure {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  .about-loop {
+    padding: 1.5rem 0;
+  }
+}

@@ -1,6 +1,6 @@
 /* =========================================================
    PAGES CSS — Crescent Literary Society
-   Page-specific sections: Hero, Wings, Blog, Obverse,
+   Page-specific sections: Hero, Wings, Blog,
    About tabs, Club pages, Connect form, Stats
    ========================================================= */
 
@@ -80,13 +80,6 @@
   text-shadow: 0 4px 40px rgba(0,0,0,0.5);
 }
 
-.hero-tagline {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(1.15rem, 2.5vw, 1.55rem);
-  color: rgba(255, 255, 255, 0.88);
-  margin-bottom: 0.5rem;
-}
 
 .hero-motto {
   font-family: var(--font-nav);
@@ -126,55 +119,31 @@
   color: rgba(255,255,255,0.3);
 }
 
-/* =========================================================
-   HOME — ABOUT SNIPPET
-   ========================================================= */
-/* =========================================================
-   HOME — ABOUT SNIPPET (Full-width carousel)
-   ========================================================= */
-.about-fullwidth {
-  position: relative;
-  padding: 6rem 0 4rem;
-  display: block;
-}
-
-.about-fw-carousel {
+/* --- Hero cursor dot (js/cursor-dot.js) ---
+   .has-cursor-dot is set by the script, so the native cursor is
+   only hidden once there's a dot standing in for it. */
+.hero-cursor-dot {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px; /* centred on the pointer without fighting GSAP's transform */
+  border-radius: 50%;
+  background: #fc3838;
+  box-shadow: 0 0 12px rgba(252, 56, 56, 0.55);
+  opacity: 0;
+  z-index: 5; /* over .main-hero-overlay, under .hero-scroll */
+  pointer-events: none;
+  will-change: transform, opacity;
 }
 
-.about-fw-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.15) 0%,
-    rgba(0,0,0,0.6) 100%
-  );
-  z-index: 1;
-}
-
-.about-fw-content {
-  position: relative;
-  z-index: 2;
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.about-fw-content .eyebrow {
-  color: var(--accent-gold);
-}
-
-.about-fw-content h2 {
-  color: var(--text-primary);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  margin-bottom: 0.5rem;
-}
-
-.about-fw-content .divider {
-  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-  margin: 1.5rem auto;
+/* The pill nav is a sibling of .main-hero, not a descendant, so it
+   keeps its own cursor. `*` is needed because .btn sets cursor
+   explicitly and would otherwise beat inheritance. */
+.main-hero.has-cursor-dot,
+.main-hero.has-cursor-dot * {
+  cursor: none;
 }
 
 .about-lead {
@@ -185,73 +154,6 @@
   line-height: 1.75;
 }
 
-.about-fw-sub {
-  color: var(--text-secondary);
-  font-size: 0.97rem;
-  margin-bottom: 0;
-}
-
-.about-snippet-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
-
-.motto-tag {
-  display: inline-block;
-  font-family: var(--font-nav);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent-red);
-  border: 1px solid var(--accent-red);
-  border-radius: 2px;
-  padding: 0.3rem 0.8rem;
-}
-
-.motto-tag-light {
-  display: inline-block;
-  font-family: var(--font-nav);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  border: 1px solid var(--text-secondary);
-  border-radius: 2px;
-  padding: 0.3rem 0.8rem;
-}
-
-.about-carousel-dots {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 2rem;
-  display: flex;
-  gap: 0.5rem;
-  z-index: 5;
-}
-
-.about-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
-  border: none;
-  cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
-  padding: 0;
-}
-
-.about-dot.active {
-  background: #ffffff;
-  transform: scale(1.3);
-}
-
-/* Legacy split layout (kept for reference) */
-.about-snippet-section { padding: 0; }
 
 /* =========================================================
    ABOUT PAGE UTILITIES
@@ -406,110 +308,11 @@
 }
 
 /* =========================================================
-   HOME — OUR WINGS
+   BLOG CARDS — blog / meraki / crescent-line listings
    ========================================================= */
-.wings-section {}
-
-/* =========================================================
-   HOME — BLOG
-   ========================================================= */
-.blog-section {}
-
 .blog-card .card-body h4 {
   font-size: 1rem;
   line-height: 1.45;
-}
-
-/* =========================================================
-   HOME — OBVERSE MAGAZINE
-   ========================================================= */
-.obverse-section {
-  background: var(--bg-card);
-  border-top: 1px solid var(--divider-gold);
-  border-bottom: 1px solid var(--divider-gold);
-}
-
-.obverse-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.obverse-img {
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(201, 168, 76, 0.15);
-}
-
-.obverse-img img {
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  transition: transform var(--transition-slow);
-}
-
-.obverse-img:hover img {
-  transform: scale(1.03);
-}
-
-.obverse-content h3 {
-  font-style: italic;
-  font-size: 1.4rem;
-  line-height: 1.45;
-  margin-bottom: 1rem;
-  color: var(--text-primary);
-}
-
-.obverse-content blockquote {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--text-secondary);
-  border-left: 2px solid var(--accent-red);
-  padding-left: 1.25rem;
-  margin: 1.5rem 0;
-  line-height: 1.8;
-}
-
-/* =========================================================
-   STATS BAR
-   ========================================================= */
-.stats-bar {
-  background: var(--bg-card);
-  border-top: 1px solid var(--divider-gold);
-  border-bottom: 1px solid var(--divider-gold);
-  padding: 3.5rem 0;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  text-align: center;
-}
-
-.stat-item {}
-
-.stat-number {
-  font-family: var(--font-display);
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1;
-  margin-bottom: 0.35rem;
-}
-
-.stat-number span {
-  color: var(--accent-gold);
-}
-
-.stat-label {
-  font-family: var(--font-nav);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
 }
 
 /* =========================================================
@@ -778,43 +581,6 @@
   font-weight: 700;
 }
 
-/* Events grid */
-.events-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.event-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius);
-  padding: 1.75rem;
-  transition: border-color var(--transition);
-}
-
-.event-card:hover {
-  border-color: rgba(201, 168, 76, 0.3);
-}
-
-.event-date {
-  font-family: var(--font-nav);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent-gold);
-  margin-bottom: 0.5rem;
-}
-
-.event-card h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-}
-
-.event-card p {
-  font-size: 0.88rem;
-}
 
 /* =========================================================
    CONNECT PAGE
@@ -991,35 +757,16 @@
     grid-template-columns: 1fr;
   }
 
-  .obverse-grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  .obverse-img img {
-    aspect-ratio: 16/9;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 
   .members-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .events-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 600px) {
   .members-grid {
     grid-template-columns: 1fr;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
   }
 
   .hero-actions {

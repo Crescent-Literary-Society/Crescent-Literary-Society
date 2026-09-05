@@ -1,0 +1,210 @@
+/* =========================================================
+   RECENT ACTIVITY — Crescent Literary Society
+   Collapsed tiles that expand on hover, click or focus.
+
+   Interaction adapted from Skiper UI — Skiper 52
+   (HoverExpand_001) by @gurvinder-singh02, https://gxuri.me
+   Free version requires attribution to Skiper UI.
+   Ported from React + Framer Motion to vanilla CSS.
+   ========================================================= */
+
+.ra-section {
+  padding: 5rem 0;
+}
+
+/* No global .visually-hidden utility exists in this codebase. */
+.ra-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ra-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.ra-row.is-ready {
+  animation: raRise 0.4s ease-out 0.1s both;
+}
+
+@keyframes raRise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Tile: 5rem collapsed, 24rem expanded (reference sizes) --- */
+.ra-item {
+  position: relative;
+  flex: 0 0 auto;
+  width: 5rem;
+  height: 24rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-card);
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  transition: width 0.3s ease-in-out;
+}
+
+.ra-item.is-active {
+  width: 24rem;
+}
+
+.ra-item:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 3px;
+}
+
+.ra-item-media {
+  position: absolute;
+  inset: 0;
+}
+
+.ra-item-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Cover images are optional in the CMS — coverless posts get a
+   typographic plate instead of an empty frame. */
+.ra-item-media.is-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  /* --bg-secondary rather than --bg-card: the latter is pure
+     white in the light theme, which reads as an empty tile. */
+  background: var(--bg-secondary);
+  text-align: center;
+}
+
+.ra-plate-label {
+  font-family: var(--font-nav);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+/* --- Caption, revealed on the active tile --- */
+.ra-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Reaches far enough up, and stays dark enough, that the gold
+     meta line stays legible over a pale placeholder as well as
+     over a photo. */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.55) 35%,
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.ra-item.is-active::after {
+  opacity: 1;
+}
+
+.ra-item-caption {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.ra-item.is-active .ra-item-caption {
+  opacity: 1;
+}
+
+.ra-item-meta {
+  font-family: var(--font-nav);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+.ra-item-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.ra-item-author {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* --- Empty / error state --- */
+.ra-status {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ra-status p {
+  margin-bottom: 1.5rem;
+}
+
+/* --- Mobile: the row scrolls inside itself, so the page never
+   scrolls sideways. Tap still expands. --- */
+@media (max-width: 767px) {
+  .ra-row {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0 1.5rem 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ra-item {
+    height: 20rem;
+    scroll-snap-align: center;
+  }
+
+  .ra-item.is-active {
+    width: 16rem;
+  }
+
+  .ra-item-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-item,
+  .ra-item::after,
+  .ra-item-caption {
+    transition: none;
+  }
+}

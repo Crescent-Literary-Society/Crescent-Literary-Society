@@ -4,7 +4,6 @@
    est. 2006 | "Where words ignite minds."
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
 /* --- CSS Custom Properties --- */
 :root {
@@ -20,13 +19,10 @@
 
   /* Accents */
   --accent-red:        hsl(0, 100%, 27%);
-  --accent-red-hover:  hsl(0, 68%, 42%);
   --accent-gold:       hsl(43, 89%, 38%);
   --accent-gold-hover: hsl(43, 74%, 49%);
-  --accent-gold-dim:   hsla(43, 89%, 38%, 0.1);
 
   /* Borders */
-  --border-red:     hsla(0, 100%, 27%, 0.2);
   --border-card:    hsla(0, 0%, 100%, 0.08);
   --divider-gold:   hsla(43, 89%, 38%, 0.2);
 
@@ -58,34 +54,6 @@
   --transition-slow: 0.6s ease;
 }
 
-/* --- Light Theme Overrides --- */
-[data-theme="light"] {
-  /* Backgrounds */
-  --bg-primary:    hsl(40, 20%, 93%);
-  --bg-secondary:  hsl(40, 15%, 89%);
-  --bg-card:       hsl(0, 0%, 100%);
-  --bg-alternate:  hsl(40, 15%, 88%);
-
-  /* Text */
-  --text-primary:   hsl(0, 0%, 7%);
-  --text-secondary: hsl(0, 0%, 40%);
-
-  /* Borders */
-  --border-red:     hsla(0, 100%, 27%, 0.2);
-  --border-card:    hsla(0, 0%, 0%, 0.12);
-  --divider-gold:   hsla(43, 89%, 38%, 0.2);
-
-  /* Overlays */
-  --hero-overlay: hsla(0, 0%, 0%, 0.48);
-
-  /* Footer */
-  --footer-heading: hsl(38, 70%, 35%); /* Dark, rich gold/amber */
-  --footer-text: hsl(25, 20%, 25%);    /* Dark warm brown */
-  --footer-text-muted: hsl(25, 15%, 35%); /* Medium-dark warm tone */
-  --footer-tagline: hsl(25, 30%, 30%); /* Warm dark brown for EST. 2006 */
-  --footer-motto: hsl(38, 70%, 35%);   /* Match heading color for motto */
-  --footer-divider: hsl(25, 20%, 75%); /* Clear warm grey divider */
-}
 
 /* =========================================================
    RESET
@@ -194,8 +162,6 @@ section {
   position: relative;
 }
 
-.bg-secondary { background-color: var(--bg-secondary); }
-.bg-card      { background-color: var(--bg-card); }
 .bg-alternate { background-color: var(--bg-alternate); }
 
 /* Section headers */
@@ -254,18 +220,7 @@ section {
   gap: 1.5rem;
 }
 
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.75rem;
-}
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
 
 /* =========================================================
    BUTTONS
@@ -311,17 +266,6 @@ section {
   color: #ffffff;
 }
 
-/* Filled */
-.btn-red {
-  border: 1px solid var(--accent-red);
-  color: #ffffff;
-  background: var(--accent-red);
-}
-
-.btn-red:hover {
-  background: var(--accent-red-hover);
-  border-color: var(--accent-red-hover);
-}
 
 /* =========================================================
    CARDS
@@ -334,12 +278,6 @@ section {
   transition: transform var(--transition), box-shadow var(--transition);
   display: flex;
   flex-direction: column;
-}
-
-[data-theme="light"] .card,
-[data-theme="light"] .wwd-card,
-[data-theme="light"] .post-article {
-  box-shadow: 0 2px 12px hsla(0, 0%, 0%, 0.07);
 }
 
 .card:hover {
@@ -528,9 +466,7 @@ section {
     --section-pad: 64px;
   }
 
-  .grid-4,
-  .grid-3,
-  .grid-2 {
+  .grid-4 {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }

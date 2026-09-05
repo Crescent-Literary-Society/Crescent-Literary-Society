@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Writer's Guild | Crescent Literary Society</title>
-<meta content="The creative writing wing of CLS. Shaping poetry, creative prose, short stories, essays, and editorial layouts." name="description"/>
+<title>Recent Activity | Crescent Literary Society</title>
+<meta content="Browse creative writing, poetry, opinions, and articles published by the brilliant minds of the Crescent Literary Society." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 
@@ -14,8 +14,68 @@
 
 
 
+<style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .blog-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition);
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+    }
+    .blog-thumb {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #222;
+    }
+    .blog-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .blog-date {
+      font-family: var(--font-nav);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 0.5rem;
+    }
+    .blog-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    .blog-author {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+    .blog-body-preview {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+  </style>
 
-<meta content="website" property="og:type"/><meta content="Writer's Guild | Crescent Literary Society" property="og:title"/><meta content="The creative writing wing of CLS. Shaping poetry, creative prose, short stories, essays, and editorial layouts." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/logo/logo.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/writers-guild.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/writers-guild.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/pillnav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/recent-activity.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script type="application/ld+json">
+<meta content="website" property="og:type"/><meta content="Recent Activity | Crescent Literary Society" property="og:title"/><meta content="The most recently published writing, magazines and newsletters from the Crescent Literary Society." property="og:description"/><meta content="https://crescentliterarysociety.vercel.app/assets/logo/logo.jpg" property="og:image"/><meta content="https://crescentliterarysociety.vercel.app/recent-activity.html" property="og:url"/><link href="https://crescentliterarysociety.vercel.app/recent-activity.html" rel="canonical"/><link href="css/global.css" rel="stylesheet"/><link href="css/animations.css" rel="stylesheet"/><link href="css/pillnav.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Cormorant+Garamond:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="css/pages.css" rel="stylesheet"/><link href="css/recent-activity.css" rel="stylesheet"/><link href="css/footer.css" rel="stylesheet"/><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -141,141 +201,26 @@
 </div>
 </div>
 <!-- PAGE HERO -->
-<header class="page-hero" id="writers-hero">
-<div class="hero-carousel" id="hero-carousel">`n      <div aria-label="Open notebook with pen on dark desk" class="main-hero-bg active" role="img" style="background-image: url('assets/clubs/writers-guild.jpg');"></div>`n    </div>
+<header class="page-hero" id="activity-hero" style="min-height: 300px; height: 40vh;">
+<div aria-label="CLS Campus" class="page-hero-bg" role="img" style="background-image: url('assets/hero/hero-bg.jpg');"></div>
 <div class="page-hero-overlay"></div>
 <div class="container page-hero-content">
-<span class="eyebrow">CLS Wing</span>
-<h1>Writer's Guild</h1>
-<p class="hero-sub"><em>"Every word is an act of courage."</em></p>
+<span class="eyebrow">From the Society</span>
+<h1>Recent Activity</h1>
+<p class="hero-sub"><em>The latest writing, magazines and newsletters — newest first.</em></p>
 </div>
 </header>
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <main>
-<section style="padding: 5rem 0;">
+<section aria-labelledby="activity-heading" class="ra-section">
+<h2 class="ra-visually-hidden" id="activity-heading">Recently published</h2>
+<!-- Tiles are built by js/recent-activity.js from the CMS data files. -->
+<div class="ra-row" id="recent-activity-row"></div>
 <div class="container">
-<div class="club-content">
-<!-- Body -->
-<div class="club-body">
-<div class="fade-up">
-<span class="eyebrow">Where Ink Meets Ideas</span>
-<h2>Write. Reflect. Publish.</h2>
-<div class="divider"></div>
-</div>
-<div class="fade-up delay-1">
-<p>The Writer's Guild is CLS's creative writing and literary publication arm. Members contribute essays, poetry, short fiction, and opinion pieces to <em>Obverse</em> — our internal literary magazine. Regular writing prompts, feedback sessions, and publication drives keep the creative engine running.</p>
-<p>We believe every voice deserves a page. Whether you write in whispers or in declarations, the Guild is your home.</p>
-</div>
-<blockquote class="pull-quote fade-up">
-              "Writing is thinking made visible. We don't wait for permission — we write and then we're heard."
-            </blockquote>
-<div class="fade-up">
-<p>Notable publications: <strong>Obverse Magazine</strong>, the <strong>LitRapture 2K24 Anthology</strong>, and the ongoing <strong>Unapologetic Campaign</strong> — a series celebrating fearless voices.</p>
-</div>
-<!-- What we write -->
-<div class="fade-up" style="margin-top:3rem;">
-<h3 style="margin-bottom:1.5rem;">What We Write</h3>
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-<div style="background:var(--bg-card); border-top:2px solid var(--accent-red); padding:1.5rem; border-radius:0 0 4px 4px;">
-<h4 style="font-size:1rem; margin-bottom:0.4rem;">Poetry</h4>
-<p style="font-size:0.9rem;">From terse imagist lines to sweeping free verse — all forms, all emotions welcome.</p>
-</div>
-<div style="background:var(--bg-card); border-top:2px solid var(--accent-red); padding:1.5rem; border-radius:0 0 4px 4px;">
-<h4 style="font-size:1rem; margin-bottom:0.4rem;">Short Fiction</h4>
-<p style="font-size:0.9rem;">Flash fiction, literary short stories, and experimental narrative prose.</p>
-</div>
-<div style="background:var(--bg-card); border-top:2px solid var(--accent-red); padding:1.5rem; border-radius:0 0 4px 4px;">
-<h4 style="font-size:1rem; margin-bottom:0.4rem;">Essays &amp; Opinion</h4>
-<p style="font-size:0.9rem;">Personal essays, cultural criticism, political commentary — your perspective, fully owned.</p>
-</div>
-<div style="background:var(--bg-card); border-top:2px solid var(--accent-red); padding:1.5rem; border-radius:0 0 4px 4px;">
-<h4 style="font-size:1rem; margin-bottom:0.4rem;">Reportage &amp; Review</h4>
-<p style="font-size:0.9rem;">Book reviews, event coverage, and literary journalism for the Obverse platform.</p>
-</div>
-</div>
-</div>
-<!-- Obverse feature -->
-<div class="fade-up" id="latest-magazine-preview" style="margin-top:3.5rem; background:var(--bg-card); border:1px solid var(--divider-gold); border-radius:4px; padding:2.5rem; display:flex; gap:2rem; align-items:center;">
-<div style="flex-shrink:0; width:90px;">
-<img alt="Obverse — CLS Literary Magazine" height="460" loading="lazy" src="assets/magazine/obverse-cover.jpg" style="width:90px; border-radius:4px; box-shadow: 0 8px 30px rgba(0,0,0,0.5);" width="320"/>
-</div>
-<div>
-<span class="eyebrow" style="margin-bottom:0.4rem;">Our Magazine</span>
-<h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Obverse</h3>
-<p style="font-size:0.95rem;">CLS's flagship literary magazine — publishing the finest writing our members produce. Essays, poetry, fiction, and opinion from voices that refuse to be polite about the world.</p>
-</div>
-</div>
-</div>
-<!-- Sidebar -->
-<aside aria-label="Writer's Guild quick facts" class="club-highlights">
-<div class="highlight-box fade-up">
-<h4>We Publish</h4>
-<ul class="highlight-list">
-<li>Obverse Magazine</li>
-<li>LitRapture Anthology</li>
-<li>Unapologetic Campaign</li>
-<li>Online blog posts</li>
-</ul>
-</div>
-<div class="highlight-box fade-up">
-<h4>We Write</h4>
-<ul class="highlight-list">
-<li>Poetry</li>
-<li>Short fiction</li>
-<li>Personal essays</li>
-<li>Opinion &amp; critique</li>
-<li>Book reviews</li>
-</ul>
-</div>
-</aside>
-</div>
-</div>
-</section>
-<!-- ============================================================
-       STORY WRITING — Obverse posts, newest first.
-       Same strip as recent-activity.html; js/recent-activity.js
-       reads the data-ra-* config off the row below.
-       ============================================================ -->
-<section aria-labelledby="story-writing-heading" class="ra-section">
-<div class="container">
-<div class="section-header centered">
-<span class="eyebrow">From Obverse</span>
-<h2 id="story-writing-heading">Story Writing</h2>
-<div class="divider"></div>
-</div>
-</div>
-<div class="ra-row" data-ra-category="Story Writing" data-ra-empty="No story writing has been published yet. New posts will appear here automatically." data-ra-label="Story Writing" data-ra-link-href="blog.html" data-ra-link-text="Browse the blog" data-ra-sources="obverse" data-ra-status="story-writing-status" id="story-writing-row"></div>
-<div class="container">
-<div class="ra-status" hidden id="story-writing-status"></div>
-</div>
-</section>
-<section class="bg-alternate" style="padding: 5rem 0;">
-<div class="container">
-<div class="section-header centered fade-up">
-<span class="eyebrow">Wing Content</span>
-<h2>From the Guild</h2>
-<div class="divider"></div>
-<p>Latest stories, poems, and creative writing from our members.</p>
-</div>
-<div class="grid-3 stagger" id="wing-entries-grid" data-wing="writers-guild">
-<p style="text-align: center; color: var(--text-secondary); width: 100%;">Loading...</p>
-</div>
-<h3 style="text-align:center; margin-top:3.5rem; font-size:1.1rem; color:var(--text-secondary);">Wing Coordinators</h3>
-<div class="grid-4 stagger" id="coordinators-grid" data-team-filter="writers-guild" style="margin-top: 1.5rem;"></div>
-</div>
-</section>
-<!-- CTA Banner -->
-<section style="background:var(--bg-card); border-top:1px solid var(--divider-gold); border-bottom:1px solid var(--divider-gold); padding:4rem 0; text-align:center;">
-<div class="container">
-<div class="fade-up">
-<span class="eyebrow">Your Page Awaits</span>
-<h2 style="font-size:2rem; margin-bottom:1rem;">Pick Up the Pen</h2>
-<p style="max-width:500px; margin:0 auto 2rem;">There's no wrong way to start. Just write, and we'll help you shape it into something that deserves to be read.</p>
-</div>
+<div class="ra-status" hidden id="recent-activity-status"></div>
 </div>
 </section>
 </main>
-<!-- FOOTER -->
 <footer class="site-footer" role="contentinfo">
 <div class="container">
 <div class="footer-main">
@@ -349,6 +294,8 @@
 </div>
 </footer>
 
+
+<!-- CMS Loader handles fetching blog.json -->
 
 
 <script defer="True" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script defer="True" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script><script defer="True" src="js/nav.js"></script><script defer="True" src="js/pillnav.js"></script><script defer="True" src="js/cms-loader.js"></script><script defer="True" src="js/recent-activity.js"></script><script defer="True" src="js/scroll-animations.js"></script></body>
