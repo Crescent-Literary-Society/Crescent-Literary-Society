@@ -119,33 +119,6 @@
   color: rgba(255,255,255,0.3);
 }
 
-/* --- Hero cursor dot (js/cursor-dot.js) ---
-   .has-cursor-dot is set by the script, so the native cursor is
-   only hidden once there's a dot standing in for it. */
-.hero-cursor-dot {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  margin: -5px 0 0 -5px; /* centred on the pointer without fighting GSAP's transform */
-  border-radius: 50%;
-  background: #fc3838;
-  box-shadow: 0 0 12px rgba(252, 56, 56, 0.55);
-  opacity: 0;
-  z-index: 5; /* over .main-hero-overlay, under .hero-scroll */
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-/* The pill nav is a sibling of .main-hero, not a descendant, so it
-   keeps its own cursor. `*` is needed because .btn sets cursor
-   explicitly and would otherwise beat inheritance. */
-.main-hero.has-cursor-dot,
-.main-hero.has-cursor-dot * {
-  cursor: none;
-}
-
 .about-lead {
   font-size: 1.1rem;
   font-weight: 500;
